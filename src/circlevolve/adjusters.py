@@ -3,8 +3,30 @@ from math import log2
 import numpy as np
 
 
-def default_adjust(image):
-    return image
+def adjust(original_image, adjusters):
+    if not adjusters:
+        return original_image
+
+    adjustments = [adjuster['adjust'] for adjuster in adjusters]
+    adjusted_image = original_image.copy()
+
+    for adjustment in adjustments:
+        adjusted_image = adjustment(adjusted_image)
+
+    return adjusted_image
+
+
+def unadjust(adjusted_image, adjusters):
+    if not adjusters:
+        return adjusted_image
+
+    unadjustments = reversed([adjuster['unadjust'] for adjuster in adjusters])
+    original_image = adjusted_image.copy()
+
+    for unadjustment in unadjustments:
+        original_image = unadjustment(original_image)
+
+    return original_image
 
 
 def dark_adjust(original_image):
@@ -31,5 +53,4 @@ def dark_unadjust(adjusted_image):
     return original_image
 
 
-NO_ADJUSTER = {"adjust": default_adjust, "unadjust": default_adjust}
 DARK_ADJUSTER = {"adjust": dark_adjust, "unadjust": dark_unadjust}

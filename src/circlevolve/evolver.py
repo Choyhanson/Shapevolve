@@ -1,6 +1,6 @@
 import time
 from math import inf  # for math help :D
-from multiprocessing import Pool  # To distribute processesh
+from multiprocessing import Pool  # To distribute processes
 
 # noinspection PyUnresolvedReferences
 import cv2  # opencv2 for image management
@@ -10,8 +10,9 @@ from PIL import Image  # for initial image palette and bgcolor generation with h
 from matplotlib.pyplot import show
 
 # noinspection PyUnresolvedReferences
-from adjusters import NO_ADJUSTER
+from adjusters import adjust
 from colorthief_from_image import ColorThiefFromImage
+from drawers import add_circle
 # noinspection PyUnresolvedReferences
 from error_metrics import mean_squared_error
 from gene import Gene
@@ -19,7 +20,7 @@ from genome import Genome
 from mutations import simple_mutation, complex_mutation
 # noinspection PyUnresolvedReferences
 from preprocessors import smooth_preprocess
-from utils import get_rescale_ratio, convert_RGB_to_BGR, show_image, add_circle
+from utils import get_rescale_ratio, convert_RGB_to_BGR, show_image
 
 
 class Evolver:
@@ -29,22 +30,34 @@ class Evolver:
     _COMPLEX_POOL_SIZE = 4
 
     def __init__(self, filename, num_circles=1000, num_colors=256, target_resolution=250,
-                 adjuster=NO_ADJUSTER, preprocess=smooth_preprocess,
+                 adjusters=None, preprocesses=None, draw=add_circle,
                  calculate_error=mean_squared_error):
+        if adjusters is None:
+            self.adjusters = []
+        else:
+            self.adjusters = adjusters
 
+        if preprocesses is None:
+            preprocesses = [smooth_preprocess]
+
+        self.draw = draw
         self.filename = filename
         self.num_circles = num_circles
         self.num_colors = num_colors
-        self.adjuster = adjuster
         self.calculate_error = calculate_error
 
-        loaded_image = preprocess(Image.open(filename))
+        loaded_image = Image.open(filename)
+
+        for preprocess in preprocesses:
+            loaded_image = preprocess(loaded_image)
 
         self.ratio = get_rescale_ratio(loaded_image, target_resolution)
         self.width = int(loaded_image.width * self.ratio)
         self.height = int(loaded_image.height * self.ratio)
         loaded_image = loaded_image.resize((self.width, self.height), Image.LANCZOS)
-        image_array = adjuster['adjust'](np.asarray(loaded_image))
+
+        image_array = adjust(np.asarray(loaded_image), adjusters)
+
         loaded_image = Image.fromarray(image_array)
         self.base_image = cv2.cvtColor(image_array, cv2.COLOR_RGB2BGR)
 
@@ -53,12 +66,11 @@ class Evolver:
         self.backgroundColor = convert_RGB_to_BGR(color_thief.get_color(quality=1))  # gets the background color
 
         # Gets the top colours used by the image
-        self.palette = color_thief.get_palette(color_count=num_colors,
-                                               quality=1)
+        self.palette = color_thief.get_palette(color_count=num_colors, quality=1)
         for index, color in enumerate(self.palette):
             self.palette[index] = convert_RGB_to_BGR(color)
 
-        self.display = show_image(self.base_image)  # Preview image
+        self.display = show_image(self.base_image, adjusters=self.adjusters)  # Preview image
 
         resolution = (self.width, self.height)
         self.minRadius = int(0.02 * min(resolution))
@@ -86,7 +98,10 @@ class Evolver:
                     for _ in range(self.num_circles)]  # Generate initial gene sequence.
 
         genome = Genome(sequence, self.ratio, self.height, self.width,
-                        self.backgroundColor, self.adjuster, self.palette)  # Build a genome
+                        self.backgroundColor, self.adjusters, self.palette, self.draw)  # Build a genome
+
+        image = genome.render_raw_image()
+        show_image(image, self.display)
 
         generations_since_last_change = 0  # counter for above.
         total_generation_changes = 0  # number of total generation changes,
@@ -116,7 +131,7 @@ class Evolver:
 
                 results = complex_pool.starmap(complex_mutation, [
                     (self.ancestorImage, self.base_image, sequence, self.num_circles, self.calculate_error,
-                     self.palette) for _ in range(self._COMPLEX_POOL_SIZE)])
+                     self.palette, self.draw) for _ in range(self._COMPLEX_POOL_SIZE)])
                 score_list = [results[index][0] for index in range(self._COMPLEX_POOL_SIZE)]
                 best_index = score_list.index(min(score_list))
                 score = results[best_index][0]
@@ -161,13 +176,13 @@ class Evolver:
                     image = self.ancestorImage.copy()
                     for index, gene in enumerate(sequence):
                         if index != 0:
-                            add_circle(image, gene, self.palette)
+                            self.draw(image, gene, self.palette)
                     cached_image = image.copy()
                     recall_from_cache = True
 
                 results = simple_pool.starmap(simple_mutation,
-                                              [(image, self.base_image, sequence, self.calculate_error, self.palette)
-                                               for _ in range(self._SIMPLE_POOL_SIZE)])
+                                              [(image, self.base_image, sequence, self.calculate_error, self.palette,
+                                                self.draw) for _ in range(self._SIMPLE_POOL_SIZE)])
 
                 score_list = [results[index][0] for index in range(self._SIMPLE_POOL_SIZE)]
                 best_index = score_list.index(min(score_list))
@@ -209,13 +224,14 @@ class Evolver:
                 print(f"error: {top_score}")
                 extreme = "extreme" if extreme_mutation else "not extreme"
                 print(f"Extreme?: {extreme}")
-                show_image(top_image, display=self.display, adjuster=self.adjuster)
+                show_image(top_image, display=self.display, adjusters=genome.adjusters)
 
         end = time.time()
         print(f"Total time elapsed: {end - start}")
 
         image = genome.render_scaled_image()
-        show_image(genome.render_scaled_image(), display=self.display, adjuster=genome.adjuster)
+        show_image(image, display=self.display)
+
         cv2.imwrite(self.filename + "_result.png", image)
         genome.save_genome(self.filename + "_genome.pkl")
 
@@ -225,7 +241,7 @@ class Evolver:
 
         simple_pool.close()
         simple_pool.join()
-        
+
         complex_pool.close()
         complex_pool.join()
 
