@@ -1,5 +1,3 @@
-import time
-from math import inf  # for math help :D
 from multiprocessing import Pool  # To distribute processes
 
 # noinspection PyUnresolvedReferences
@@ -11,6 +9,8 @@ from matplotlib.pyplot import show
 
 # noinspection PyUnresolvedReferences
 from adjusters import adjust
+# noinspection PyUnresolvedReferences
+from callbacks import default_callback
 from colorthief_from_image import ColorThiefFromImage
 from drawers import add_circle
 # noinspection PyUnresolvedReferences
@@ -20,7 +20,7 @@ from genome import Genome
 from mutations import simple_mutation, complex_mutation
 # noinspection PyUnresolvedReferences
 from preprocessors import smooth_preprocess
-from utils import get_rescale_ratio, convert_RGB_to_BGR, show_image
+from utils import get_rescale_ratio, convert_RGB_to_BGR
 
 
 class Evolver:
@@ -70,8 +70,6 @@ class Evolver:
         for index, color in enumerate(self.palette):
             self.palette[index] = convert_RGB_to_BGR(color)
 
-        self.display = show_image(self.base_image, adjusters=self.adjusters)  # Preview image
-
         resolution = (self.width, self.height)
         self.minRadius = int(0.02 * min(resolution))
         self.maxRadius = int(0.08 * min(resolution))
@@ -79,29 +77,19 @@ class Evolver:
         self.ancestorImage = np.zeros((self.height, self.width, 3), np.uint8)
         self.ancestorImage[:] = self.backgroundColor
 
-        print("shape: ")
-        print(self.base_image.shape)
+    def evolve(self, num_generations=5000, callbacks=None):
 
-        print("new shape: ")
-        print(self.ancestorImage.shape)
-
-    def evolve(self, num_generations=5000):
-        top_score = inf  # original best score is infinite, so the first run will always overwrite it.
-        top_image = None  # the best image so far.
+        if callbacks is None:
+            callbacks = [default_callback]
 
         cached_image = None  # Location to store a cached image for later use.
         recall_from_cache = False  # Whether to load an image from the cache or build it from scratch.
-
-        start = time.time()
 
         sequence = [Gene(self.maxRadius, self.minRadius, self.height, self.width, self.num_colors)
                     for _ in range(self.num_circles)]  # Generate initial gene sequence.
 
         genome = Genome(sequence, self.ratio, self.height, self.width,
                         self.backgroundColor, self.adjusters, self.palette, self.draw)  # Build a genome
-
-        image = genome.render_raw_image()
-        show_image(image, self.display)
 
         generations_since_last_change = 0  # counter for above.
         total_generation_changes = 0  # number of total generation changes,
@@ -117,11 +105,16 @@ class Evolver:
         last_update = -1
 
         generation_index = 0
-        offspring = 0  # Record number of generations.
+        offspring = 1  # Record number of generations.
         changes = 0  # Record number of total changes made.
         # (some generations may have failed mutations that do not affect the sequence.)
 
-        print("start")
+        top_image = genome.render_raw_image()
+        top_score = self.calculate_error(top_image, self.base_image)
+
+        for callback in callbacks:
+            callback(offspring, changes, generation_index, total_generation_changes, top_score,
+                     extreme_mutation, top_image, genome.adjusters)
 
         while changes < num_generations:
             if extreme_mutation:
@@ -214,29 +207,12 @@ class Evolver:
 
             generation_index += 1
 
-            # Periodic checks on progress, every 100 generations.
-            if changes % 50 == 0 and last_update != changes:
+            if last_update != changes:
                 last_update = changes
-                print(f"offspring: {offspring}")
-                print(f"number of changes: {changes}")
-                print(f"number of total generations: {generation_index}")
-                print(f"number of evolution switches: {total_generation_changes}")
-                print(f"error: {top_score}")
-                extreme = "extreme" if extreme_mutation else "not extreme"
-                print(f"Extreme?: {extreme}")
-                show_image(top_image, display=self.display, adjusters=genome.adjusters)
+                for callback in callbacks:
+                    callback(offspring, changes, generation_index, total_generation_changes, top_score,
+                             extreme_mutation, top_image, genome.adjusters)
 
-        end = time.time()
-        print(f"Total time elapsed: {end - start}")
-
-        image = genome.render_scaled_image()
-        show_image(image, display=self.display)
-
-        cv2.imwrite(self.filename + "_result.png", image)
-        genome.save_genome(self.filename + "_genome.pkl")
-
-        print("changes: ")
-        print(changes)
         show()
 
         simple_pool.close()
