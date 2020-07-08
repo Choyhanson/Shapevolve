@@ -223,4 +223,10 @@ class Evolver:
         print(changes)
         show()
 
+        simple_pool.close()
+        simple_pool.join()
+        
+        complex_pool.close()
+        complex_pool.join()
+
         return genome
