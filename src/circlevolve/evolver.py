@@ -110,7 +110,7 @@ class Evolver:
 
         for callback in callbacks:
             callback(offspring, changes, loop_index, num_mutation_type_switches, best_error,
-                     use_complex_mutation, best_image, self.genome.adjusters)
+                     use_complex_mutation, best_image, self.genome)
 
         while changes < num_generations:
             if use_complex_mutation:
@@ -207,7 +207,7 @@ class Evolver:
                 previous_changes = changes
                 for callback in callbacks:
                     callback(offspring, changes, loop_index, num_mutation_type_switches, best_error,
-                             use_complex_mutation, best_image, self.genome.adjusters)
+                             use_complex_mutation, best_image, self.genome)
 
         simple_pool.close()
         simple_pool.join()
