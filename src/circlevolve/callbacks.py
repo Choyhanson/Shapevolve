@@ -19,3 +19,10 @@ def default_callback(offspring, changes, generation_index, total_generation_chan
         display = show_image(top_image, adjusters=adjusters)
     else:
         show_image(top_image, display=display, adjusters=adjusters)
+
+
+def quiet_callback(offspring, changes, generation_index, total_generation_changes, top_score,
+                   extreme_mutation, top_image, adjusters):
+    if changes % 50 == 0:
+        default_callback(offspring, changes, generation_index, total_generation_changes, top_score,
+                         extreme_mutation, top_image, adjusters)
