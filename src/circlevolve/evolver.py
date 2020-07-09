@@ -215,4 +215,4 @@ class Evolver:
         complex_pool.close()
         complex_pool.join()
 
-        return self.genome, self.genome.render_scaled_image(), terminated_early
+        return self.genome
