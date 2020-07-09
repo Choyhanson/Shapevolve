@@ -1,6 +1,6 @@
 from matplotlib.pyplot import show
 
-from adjusters import DARK_ADJUSTER
+from adjusters import STRONG_DARK_ADJUSTER
 from drawers import add_square
 from evolver import Evolver
 from genome import Genome
@@ -14,7 +14,7 @@ STARRYNIGHT = get_image_path("starrynight.png", IMAGE_DIRECTORY)
 
 
 def dark_sample(path):
-    evolver = Evolver(path, adjusters=[DARK_ADJUSTER])
+    evolver = Evolver(path, adjusters=[STRONG_DARK_ADJUSTER])
     evolver.evolve(num_generations=1000)
 
 

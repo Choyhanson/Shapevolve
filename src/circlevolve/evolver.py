@@ -4,9 +4,7 @@ import cv2  # opencv2 for image management
 import numpy as np  # for linear algebra help
 from PIL import Image  # for initial image palette and bgcolor generation with help of colorthief
 
-from adjusters import adjust
 from callbacks import default_callback
-from colorthief_from_image import ColorThiefFromImage
 from drawers import add_circle
 # noinspection PyUnresolvedReferences
 from error_metrics import mean_squared_error
@@ -15,7 +13,7 @@ from genome import Genome
 from mutations import simple_mutation, complex_mutation
 # noinspection PyUnresolvedReferences
 from preprocessors import smooth_preprocess
-from utils import get_rescale_ratio, convert_RGB_to_BGR
+from utils import get_rescale_ratio, convert_RGB_to_BGR, adjust, ColorThiefFromImage
 
 
 class Evolver:

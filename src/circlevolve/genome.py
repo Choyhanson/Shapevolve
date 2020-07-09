@@ -2,7 +2,7 @@ import pickle
 
 import numpy as np
 
-from adjusters import unadjust
+from utils import unadjust
 
 
 class MismatchedGenomeError(Exception):
@@ -67,6 +67,11 @@ class Genome:  # Represents an entire image's circle sequence and properties.
                     raise MismatchedGenomeError(f"Genome match was inconsistent: {check} field was incorrect. "
                                                 f"Please make sure the source image matches the genome you are "
                                                 f"trying to load.")
+
+        if len(genome1.sequence) != len(genome2.sequence):
+            raise MismatchedGenomeError(f"Genome match was inconsistent: gene sequences had different lengths. "
+                                        f"Please make sure the source image matches the genome you are "
+                                        f"trying to load.")
 
         genome1dict = vars(genome1)
         genome2dict = vars(genome2)
