@@ -5,7 +5,6 @@ import cv2  # opencv2 for image management
 # noinspection PyUnresolvedReferences
 import numpy as np  # for linear algebra help
 from PIL import Image  # for initial image palette and bgcolor generation with help of colorthief
-from matplotlib.pyplot import show
 
 # noinspection PyUnresolvedReferences
 from adjusters import adjust
@@ -29,9 +28,8 @@ class Evolver:
     _SIMPLE_POOL_SIZE = 32
     _COMPLEX_POOL_SIZE = 4
 
-    def __init__(self, filename, num_circles=1000, num_colors=256, target_resolution=250,
-                 adjusters=None, preprocesses=None, draw=add_circle,
-                 calculate_error=mean_squared_error):
+    def __init__(self, filepath, saved_genome=None, num_circles=1000, num_colors=256, target_resolution=250,
+                 adjusters=None, preprocesses=None, draw=add_circle, calculate_error=mean_squared_error):
         if adjusters is None:
             self.adjusters = []
         else:
@@ -41,12 +39,11 @@ class Evolver:
             preprocesses = [smooth_preprocess]
 
         self.draw = draw
-        self.filename = filename
         self.num_circles = num_circles
         self.num_colors = num_colors
         self.calculate_error = calculate_error
 
-        loaded_image = Image.open(filename)
+        loaded_image = Image.open(filepath)
 
         for preprocess in preprocesses:
             loaded_image = preprocess(loaded_image)
@@ -63,7 +60,7 @@ class Evolver:
 
         color_thief = ColorThiefFromImage(loaded_image)
 
-        self.backgroundColor = convert_RGB_to_BGR(color_thief.get_color(quality=1))  # gets the background color
+        background_color = convert_RGB_to_BGR(color_thief.get_color(quality=1))  # gets the background color
 
         # Gets the top colours used by the image
         self.palette = color_thief.get_palette(color_count=num_colors, quality=1)
@@ -71,11 +68,22 @@ class Evolver:
             self.palette[index] = convert_RGB_to_BGR(color)
 
         resolution = (self.width, self.height)
-        self.minRadius = int(0.02 * min(resolution))
-        self.maxRadius = int(0.08 * min(resolution))
+        self.min_radius = int(0.02 * min(resolution))
+        self.max_radius = int(0.08 * min(resolution))
 
-        self.ancestorImage = np.zeros((self.height, self.width, 3), np.uint8)
-        self.ancestorImage[:] = self.backgroundColor
+        self.ancestor_image = np.zeros((self.height, self.width, 3), np.uint8)
+        self.ancestor_image[:] = background_color
+
+        self.sequence = [Gene(self.max_radius, self.min_radius, self.height, self.width, self.num_colors)
+                         for _ in range(self.num_circles)]  # Generate initial gene sequence.
+
+        self.genome = Genome(self.sequence, self.ratio, self.height, self.width,
+                             background_color, self.adjusters, self.palette, self.draw)  # Build a genome
+
+        if saved_genome is not None:
+            if Genome.isCompatible(self.genome, saved_genome):
+                self.genome = saved_genome
+                self.sequence = saved_genome.sequence
 
     def evolve(self, num_generations=5000, callbacks=None):
 
@@ -84,12 +92,6 @@ class Evolver:
 
         cached_image = None  # Location to store a cached image for later use.
         recall_from_cache = False  # Whether to load an image from the cache or build it from scratch.
-
-        sequence = [Gene(self.maxRadius, self.minRadius, self.height, self.width, self.num_colors)
-                    for _ in range(self.num_circles)]  # Generate initial gene sequence.
-
-        genome = Genome(sequence, self.ratio, self.height, self.width,
-                        self.backgroundColor, self.adjusters, self.palette, self.draw)  # Build a genome
 
         generations_since_last_change = 0  # counter for above.
         total_generation_changes = 0  # number of total generation changes,
@@ -109,12 +111,12 @@ class Evolver:
         changes = 0  # Record number of total changes made.
         # (some generations may have failed mutations that do not affect the sequence.)
 
-        top_image = genome.render_raw_image()
+        top_image = self.genome.render_raw_image()
         top_score = self.calculate_error(top_image, self.base_image)
 
         for callback in callbacks:
             callback(offspring, changes, generation_index, total_generation_changes, top_score,
-                     extreme_mutation, top_image, genome.adjusters)
+                     extreme_mutation, top_image, self.genome.adjusters)
 
         while changes < num_generations:
             if extreme_mutation:
@@ -123,7 +125,7 @@ class Evolver:
                 offspring += self._COMPLEX_POOL_SIZE
 
                 results = complex_pool.starmap(complex_mutation, [
-                    (self.ancestorImage, self.base_image, sequence, self.num_circles, self.calculate_error,
+                    (self.ancestor_image, self.base_image, self.sequence, self.num_circles, self.calculate_error,
                      self.palette, self.draw) for _ in range(self._COMPLEX_POOL_SIZE)])
                 score_list = [results[index][0] for index in range(self._COMPLEX_POOL_SIZE)]
                 best_index = score_list.index(min(score_list))
@@ -137,11 +139,11 @@ class Evolver:
                 if score < top_score:
                     top_score = score
                     top_image = image
-                    del sequence[mutated_index]
+                    del self.sequence[mutated_index]
                     if top:
-                        sequence.append(mutated_gene)
+                        self.sequence.append(mutated_gene)
                     else:
-                        sequence.insert(mutated_index, mutated_gene)
+                        self.sequence.insert(mutated_index, mutated_gene)
                     changes += 1
                     # Reset all values and go back to regular mutations.
                     generations_since_last_change = 0
@@ -166,16 +168,16 @@ class Evolver:
                 if recall_from_cache:
                     image = cached_image.copy()  # Take built image from
                 else:
-                    image = self.ancestorImage.copy()
-                    for index, gene in enumerate(sequence):
+                    image = self.ancestor_image.copy()
+                    for index, gene in enumerate(self.sequence):
                         if index != 0:
                             self.draw(image, gene, self.palette)
                     cached_image = image.copy()
                     recall_from_cache = True
 
                 results = simple_pool.starmap(simple_mutation,
-                                              [(image, self.base_image, sequence, self.calculate_error, self.palette,
-                                                self.draw) for _ in range(self._SIMPLE_POOL_SIZE)])
+                                              [(image, self.base_image, self.sequence, self.calculate_error,
+                                                self.palette, self.draw) for _ in range(self._SIMPLE_POOL_SIZE)])
 
                 score_list = [results[index][0] for index in range(self._SIMPLE_POOL_SIZE)]
                 best_index = score_list.index(min(score_list))
@@ -188,8 +190,8 @@ class Evolver:
                     top_score = score
                     top_image = image
 
-                    del sequence[0]
-                    sequence.append(mutated_gene)  # Place the gene on top of the sequence again.
+                    del self.sequence[0]
+                    self.sequence.append(mutated_gene)  # Place the gene on top of the sequence again.
 
                     changes += 1  # record a change
                     generations_since_last_change = 0
@@ -211,9 +213,7 @@ class Evolver:
                 last_update = changes
                 for callback in callbacks:
                     callback(offspring, changes, generation_index, total_generation_changes, top_score,
-                             extreme_mutation, top_image, genome.adjusters)
-
-        show()
+                             extreme_mutation, top_image, self.genome.adjusters)
 
         simple_pool.close()
         simple_pool.join()
@@ -221,4 +221,4 @@ class Evolver:
         complex_pool.close()
         complex_pool.join()
 
-        return genome
+        return self.genome

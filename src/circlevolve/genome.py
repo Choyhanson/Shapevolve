@@ -5,6 +5,10 @@ import numpy as np
 from adjusters import unadjust
 
 
+class MismatchedGenomeError(Exception):
+    pass
+
+
 class Genome:  # Represents an entire image's circle sequence and properties.
     def __init__(self, sequence, ratio, height, width, background_color, adjusters, palette, draw):  # basic constructor
         self.sequence = sequence
@@ -49,3 +53,27 @@ class Genome:  # Represents an entire image's circle sequence and properties.
         with open(filename, 'rb') as genomeFile:
             genome = pickle.load(genomeFile)
         return genome
+
+    @staticmethod
+    def isCompatible(genome1, genome2):
+        gene_checks = ['max_radius', 'min_radius', 'height', 'width', 'num_colors']
+        genome_checks = ['ratio', 'height', 'width', 'background_color', 'adjusters', 'palette', 'draw']
+
+        for gene1, gene2 in zip(genome1.sequence, genome2.sequence):
+            gene1_dict = vars(gene1)
+            gene2_dict = vars(gene2)
+            for check in gene_checks:
+                if gene1_dict[check] != gene2_dict[check]:
+                    raise MismatchedGenomeError(f"Genome match was inconsistent: {check} field was incorrect. "
+                                                f"Please make sure the source image matches the genome you are "
+                                                f"trying to load.")
+
+        genome1dict = vars(genome1)
+        genome2dict = vars(genome2)
+        for check in genome_checks:
+            if genome1dict[check] != genome2dict[check]:
+                raise MismatchedGenomeError(f"Genome match was inconsistent: {check} field was incorrect. "
+                                            f"Please make sure the source image matches the genome you are "
+                                            f"trying to load.")
+
+        return True

@@ -1,6 +1,9 @@
+from matplotlib.pyplot import show
+
 from adjusters import DARK_ADJUSTER
 from drawers import add_square
 from evolver import Evolver
+from genome import Genome
 from preprocessors import contrast_preprocess, saturate_preprocess, smooth_preprocess
 from utils import get_image_path
 
@@ -30,5 +33,18 @@ def square_sample(path):
     evolver.evolve(num_generations=1000)
 
 
+def save_sample(path):
+    evolver = Evolver(path)
+    genome = evolver.evolve(num_generations=300)
+    genome.save_genome(path + "_genome.pkl")
+
+
+def load_sample(path):
+    saved_genome = Genome.load_genome(path + "_genome.pkl")
+    evolver = Evolver(path, saved_genome=saved_genome)
+    evolver.evolve(num_generations=300)
+
+
 if __name__ == '__main__':
     regular_sample(STARRYNIGHT)
+    show()
