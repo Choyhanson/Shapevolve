@@ -1,14 +1,10 @@
 from multiprocessing import Pool  # To distribute processes
 
-# noinspection PyUnresolvedReferences
 import cv2  # opencv2 for image management
-# noinspection PyUnresolvedReferences
 import numpy as np  # for linear algebra help
 from PIL import Image  # for initial image palette and bgcolor generation with help of colorthief
 
-# noinspection PyUnresolvedReferences
 from adjusters import adjust
-# noinspection PyUnresolvedReferences
 from callbacks import default_callback
 from colorthief_from_image import ColorThiefFromImage
 from drawers import add_circle
