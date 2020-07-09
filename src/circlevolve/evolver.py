@@ -103,6 +103,8 @@ class Evolver:
         changes = 0  # Record number of total changes made.
         # (some generations may have failed mutations that do not affect the sequence.)
 
+        terminated_early = False
+
         best_image = self.genome.render_raw_image()
         best_error = self.calculate_error(best_image, self.base_image)
 
@@ -196,6 +198,7 @@ class Evolver:
                         num_consecutive_failed_loops = 0
                         num_complex_mutation_successes_since_switch = 0
                         if final_run:
+                            terminated_early = True
                             break
 
             loop_index += 1
@@ -212,4 +215,4 @@ class Evolver:
         complex_pool.close()
         complex_pool.join()
 
-        return self.genome, self.genome.render_scaled_image()
+        return self.genome, self.genome.render_scaled_image(), terminated_early

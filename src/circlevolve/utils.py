@@ -2,17 +2,19 @@ from pathlib import Path
 
 import cv2
 from colorthief import ColorThief
-from matplotlib.pyplot import draw, pause, imshow
+from matplotlib.pyplot import draw, pause, imshow, title
 
 
 def convert_RGB_to_BGR(color):  # converts from RGB (colorthief colors) to BGR format (opencv2 colors)
     return color[2], color[1], color[0]
 
 
-def show_image(image, display=None, adjusters=None):  # Shows the image
+def show_image(image, generation, display=None, adjusters=None):  # Shows the image
 
     if adjusters is None:
         adjusters = []
+
+    title(f"Generation {generation}", fontsize=12)
 
     restored_image = unadjust(image, adjusters)
     restored_image = cv2.cvtColor(restored_image, cv2.COLOR_BGR2RGB)
