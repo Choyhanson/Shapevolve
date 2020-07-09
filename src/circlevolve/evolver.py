@@ -22,7 +22,7 @@ class Evolver:
     _SIMPLE_POOL_SIZE = 32
     _COMPLEX_POOL_SIZE = 4
 
-    def __init__(self, filepath, saved_genome=None, num_circles=1000, num_colors=256, target_resolution=250,
+    def __init__(self, base_image, saved_genome=None, num_shapes=1000, num_colors=256, target_resolution=250,
                  adjusters=None, preprocesses=None, draw=add_circle, calculate_error=mean_squared_error):
         if adjusters is None:
             self.adjusters = []
@@ -33,11 +33,11 @@ class Evolver:
             preprocesses = [smooth_preprocess]
 
         self.draw = draw
-        self.num_circles = num_circles
+        self.num_shapes = num_shapes
         self.num_colors = num_colors
         self.calculate_error = calculate_error
 
-        loaded_image = Image.open(filepath)
+        loaded_image = base_image.copy()
         for preprocess in preprocesses:
             loaded_image = preprocess(loaded_image)
 
@@ -67,7 +67,7 @@ class Evolver:
         self.ancestor_image[:] = background_color
 
         self.sequence = [Gene(self.max_radius, self.min_radius, self.height, self.width, self.num_colors)
-                         for _ in range(self.num_circles)]  # Generate initial gene sequence.
+                         for _ in range(self.num_shapes)]  # Generate initial gene sequence.
 
         self.genome = Genome(self.sequence, self.ratio, self.height, self.width,
                              background_color, self.adjusters, self.palette, self.draw)  # Build a genome
@@ -103,8 +103,6 @@ class Evolver:
         changes = 0  # Record number of total changes made.
         # (some generations may have failed mutations that do not affect the sequence.)
 
-        terminated_early = False
-
         best_image = self.genome.render_raw_image()
         best_error = self.calculate_error(best_image, self.base_image)
 
@@ -119,7 +117,7 @@ class Evolver:
                 offspring += self._COMPLEX_POOL_SIZE
 
                 results = complex_pool.starmap(complex_mutation, [
-                    (self.ancestor_image, self.base_image, self.sequence, self.num_circles, self.calculate_error,
+                    (self.ancestor_image, self.base_image, self.sequence, self.num_shapes, self.calculate_error,
                      self.palette, self.draw) for _ in range(self._COMPLEX_POOL_SIZE)])
                 error_list = [results[index][0] for index in range(self._COMPLEX_POOL_SIZE)]
                 best_index = error_list.index(min(error_list))
@@ -198,7 +196,6 @@ class Evolver:
                         num_consecutive_failed_loops = 0
                         num_complex_mutation_successes_since_switch = 0
                         if final_run:
-                            terminated_early = True
                             break
 
             loop_index += 1

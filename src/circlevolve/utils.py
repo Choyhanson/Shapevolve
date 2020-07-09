@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import cv2
+from PIL import Image
 from colorthief import ColorThief
 from matplotlib.pyplot import draw, pause, imshow, title, axis
 
@@ -75,3 +76,7 @@ class ColorThiefFromImage(ColorThief):  # Extend ColorThief to support providing
     # noinspection PyMissingConstructor
     def __init__(self, image):
         self.image = image
+
+
+def get_image(path):
+    return Image.open(path)
