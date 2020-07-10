@@ -55,8 +55,8 @@ class Gene:  # Defines a single gene, which describes how to draw a single circl
         self.radius = randint(self.min_radius, self.max_radius)
 
     def randomize_center(self):  # randomizes center of circle
-        self.center = (randint(0 - int(self.radius / 5), self.width + int(self.radius / 5)),
-                       randint(0 - int(self.radius / 5), self.height + int(self.radius / 5)))
+        self.center = (randint(0 - round(self.radius / 5), self.width + round(self.radius / 5)),
+                       randint(0 - round(self.radius / 5), self.height + round(self.radius / 5)))
 
     def randomize_color(self):  # randomizes color
         self.color = randint(0, self.num_colors - 2)
@@ -65,12 +65,12 @@ class Gene:  # Defines a single gene, which describes how to draw a single circl
         self.alpha = random() * 0.45 + 0.05
 
     def get_scaled_version(self, ratio):  # Creates a new gene that represents the circle scaled by some ratio.
-        new_radius = int(self.radius / ratio)
-        new_center = (int(self.center[0] / ratio), int(self.center[1] / ratio))
-        new_height = int(self.height / ratio)
-        new_width = int(self.width / ratio)
-        new_max_radius = int(self.max_radius / ratio)
-        new_min_radius = int(self.min_radius / ratio)
+        new_radius = round(self.radius / ratio)
+        new_center = (round(self.center[0] / ratio), round(self.center[1] / ratio))
+        new_height = round(self.height / ratio)
+        new_width = round(self.width / ratio)
+        new_max_radius = round(self.max_radius / ratio)
+        new_min_radius = round(self.min_radius / ratio)
         return Gene(new_max_radius, new_min_radius, new_height, new_width, self.num_colors, new_radius, new_center,
                     self.color, self.alpha)
 

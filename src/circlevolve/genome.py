@@ -21,8 +21,8 @@ class Genome:  # Represents an entire image's circle sequence and properties.
         self.draw = draw
 
     def render_scaled_image(self, after_unadjustment=True):  # render the image, scaled to its ratio.
-        scaled_height = int(self.height / self.ratio)
-        scaled_width = int(self.width / self.ratio)
+        scaled_height = round(self.height / self.ratio)
+        scaled_width = round(self.width / self.ratio)
         scaled_sequence = self.scale_sequence()
         scaled_image = self.render_image(scaled_height, scaled_width, scaled_sequence, after_unadjustment)
 

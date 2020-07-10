@@ -42,8 +42,8 @@ class Evolver:
             loaded_image = preprocess(loaded_image)
 
         self.ratio = get_rescale_ratio(loaded_image, target_resolution)
-        self.width = int(loaded_image.width * self.ratio)
-        self.height = int(loaded_image.height * self.ratio)
+        self.width = round(loaded_image.width * self.ratio)
+        self.height = round(loaded_image.height * self.ratio)
         loaded_image = loaded_image.resize((self.width, self.height), Image.LANCZOS)
         image_array = adjust(np.asarray(loaded_image), adjusters)
 
@@ -60,8 +60,8 @@ class Evolver:
             self.palette[index] = convert_RGB_to_BGR(color)
 
         resolution = (self.width, self.height)
-        self.min_radius = int(0.02 * min(resolution))
-        self.max_radius = int(0.08 * min(resolution))
+        self.min_radius = round(0.02 * min(resolution))
+        self.max_radius = round(0.08 * min(resolution))
 
         self.ancestor_image = np.zeros((self.height, self.width, 3), np.uint8)
         self.ancestor_image[:] = background_color
