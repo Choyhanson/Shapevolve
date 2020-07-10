@@ -65,7 +65,7 @@ class Gene:  # Defines a single gene, which describes how to draw a single circl
         self.alpha = random() * 0.45 + 0.05
 
     def get_scaled_version(self, ratio):  # Creates a new gene that represents the circle scaled by some ratio.
-        new_radius = round(self.radius / ratio)
+        new_radius = round((self.radius + 1) / ratio)
         new_center = (round(self.center[0] / ratio), round(self.center[1] / ratio))
         new_height = round(self.height / ratio)
         new_width = round(self.width / ratio)
