@@ -1,7 +1,10 @@
+"""A Gene class that defines the properties of a single shape on an image."""
+
 from random import random, randint
 
 
-class Gene:  # Defines a single gene, which describes how to draw a single circle.
+class Gene:
+    """A Gene class that defines the properties of a single shape on an image."""
     def __init__(self, max_radius, min_radius, height, width, num_colors, radius=None, center=None, color=None,
                  alpha=None):  # Basic constructor.  Leave default parameters empty for randomization.
         self.max_radius = max_radius
@@ -64,8 +67,10 @@ class Gene:  # Defines a single gene, which describes how to draw a single circl
     def randomize_alpha(self):  # randomizes alpha
         self.alpha = random() * 0.45 + 0.05
 
-    def get_scaled_version(self, ratio):  # Creates a new gene that represents the circle scaled by some ratio.
-        new_radius = round((self.radius + 1) / ratio)
+    def get_scaled_version(self, ratio,
+                           fill_gaps):  # Creates a new gene that represents the circle scaled by some ratio.
+        radius_padding = 1 if fill_gaps else 0
+        new_radius = round((self.radius + radius_padding) / ratio)
         new_center = (round(self.center[0] / ratio), round(self.center[1] / ratio))
         new_height = round(self.height / ratio)
         new_width = round(self.width / ratio)
