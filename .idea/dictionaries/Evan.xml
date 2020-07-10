@@ -5,6 +5,7 @@
       <w>decontrast</w>
       <w>desaturate</w>
       <w>filepath</w>
+      <w>ndarray</w>
     </words>
   </dictionary>
 </component>
