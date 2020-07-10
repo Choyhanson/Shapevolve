@@ -11,7 +11,7 @@ from genome import load_genome
 from preprocessors import contrast_preprocess, saturate_preprocess, smooth_preprocess
 from utils import get_image_path, get_image
 
-IMAGE_DIRECTORY = "sample-images"
+IMAGE_DIRECTORY = "samples"
 MONALISA = get_image_path("monalisa.jpg", IMAGE_DIRECTORY)
 PEARLEARRING = get_image_path("pearlearring.jpg", IMAGE_DIRECTORY)
 STARRYNIGHT = get_image_path("starrynight.png", IMAGE_DIRECTORY)
