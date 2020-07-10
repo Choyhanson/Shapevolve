@@ -4,8 +4,10 @@
       <w>circlevolve</w>
       <w>decontrast</w>
       <w>desaturate</w>
+      <w>desaturates</w>
       <w>filepath</w>
       <w>ndarray</w>
+      <w>unapplied</w>
     </words>
   </dictionary>
 </component>

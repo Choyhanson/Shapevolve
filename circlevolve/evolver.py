@@ -1,3 +1,5 @@
+"""A class that manages evolving a genome based on certain specifications."""
+
 from multiprocessing import Pool  # To distribute processes
 
 import cv2  # opencv2 for image management
@@ -9,7 +11,7 @@ from drawers import add_circle
 # noinspection PyUnresolvedReferences
 from error_metrics import mean_squared_error
 from gene import Gene
-from genome import Genome
+from genome import Genome, is_compatible
 from mutations import simple_mutation, complex_mutation
 # noinspection PyUnresolvedReferences
 from preprocessors import smooth_preprocess
@@ -17,6 +19,7 @@ from utils import get_rescale_ratio, convert_RGB_to_BGR, adjust, ColorThiefFromI
 
 
 class Evolver:
+    """A class that manages evolving a genome based on certain specifications."""
     _EARLY_STOPPING_LIMIT = 25
     _EARLY_STOPPING_LIMIT_EXTREME = 200
     _SIMPLE_POOL_SIZE = 32
@@ -24,6 +27,27 @@ class Evolver:
 
     def __init__(self, base_image, saved_genome=None, num_shapes=1000, num_colors=256, target_resolution=250,
                  adjusters=None, preprocesses=None, draw=add_circle, calculate_error=mean_squared_error):
+        """A constructor that specifies base images, a saved genome, and settings for the evolution.
+
+        :param base_image: The source PIL image object that the evolution will be performed against.
+        :param saved_genome: An optional saved genome. If unspecified, a genome will be randomly generated.
+        :param num_shapes: The number of shapes to be used in the genome construction.
+        :param num_colors: The number of colors that should be used by the shapes.
+        :param target_resolution: The resolution that images will be resized to during the evolution.
+        :param adjusters: A list of reversible adjusters that can be applied during the evolution. See adjusters module.
+        :param preprocesses: A list of preprocessors that will be applied to the image before the evolution. See preprocessors module.
+        :param draw: The function used to draw shapes on the image. See drawers module.
+        :param calculate_error: The function used to calculate errors between images. See error_metrics module.
+        :type base_image: Image
+        :type saved_genome: Genome
+        :type num_shapes: int
+        :type num_colors: int
+        :type target_resolution: int
+        :type adjusters: List[Dict[str, Callable]]
+        :type preprocesses: List[Callable]
+        :type draw: Callable
+        :type calculate_error: Callable
+        """
         if adjusters is None:
             self.adjusters = []
         else:
@@ -73,13 +97,24 @@ class Evolver:
                              background_color, self.adjusters, self.palette, self.draw)  # Build a genome
 
         if saved_genome is not None:
-            if Genome.isCompatible(self.genome, saved_genome):
+            if is_compatible(self.genome, saved_genome):
                 self.genome = saved_genome
                 self.sequence = saved_genome.sequence
 
-    def evolve(self, num_generations=5000, callbacks=None):
+    def evolve(self, num_generations=5000, callbacks=None, silent=False):
+        """Evolves a genome, and returns it after evolution.
 
-        if callbacks is None:
+        :param num_generations: The number of generations to evolve to. Note: early stoppages are possible.
+        :param callbacks: Callbacks that can be run when a new generation is evolved.
+        :param silent: Whether callbacks will be run at all.
+        :type num_generations: int
+        :type callbacks: List[Callable]
+        :type silent: bool
+        :return: Genome
+        """
+        if silent:
+            callbacks = []
+        elif callbacks is None:
             callbacks = [default_callback]
 
         cached_image = None  # Location to store a cached image for later use.

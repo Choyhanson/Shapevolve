@@ -1,14 +1,17 @@
+"""The main CLI interface for the standalone app."""
+
 from argparse import ArgumentParser
 
 from cv2 import imwrite
 from matplotlib.pyplot import show
 
 from evolver import Evolver
-from genome import Genome
+from genome import load_genome
 from utils import get_image
 
 
 def main():
+    """Run the application."""
     parser = ArgumentParser(description="Circlevolve CLI")
     parser.add_argument("image", type=str, help="Path to base image for evolution")
     parser.add_argument("--saved-genome", default=None, type=str, help="Path to saved genome for continued evolution")
@@ -17,7 +20,7 @@ def main():
     args = parser.parse_args()
 
     if args.saved_genome is not None:
-        saved_genome = Genome.load_genome(args.saved_genome)
+        saved_genome = load_genome(args.saved_genome)
     else:
         saved_genome = None
 
@@ -32,4 +35,4 @@ def main():
     genome.save_genome(genome_path)
     print(f"Image saved at {image_path}\nGenome saved at {genome_path}")
 
-    show()
+    show()  # Keep matplotlib window open.
