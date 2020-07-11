@@ -1,0 +1,3 @@
+For next deployment:
+
+Ensure index.html does not begin on an empty line. Otherwise, github-pages does not work.
