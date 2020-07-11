@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shapevolve.samples &#8212; Shapevolve v1.0-alpha documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for shapevolve.samples</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Some sample methods to show the functionality of the module.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="c1"># noinspection PyUnresolvedReferences</span>
+<span class="kn">import</span> <span class="nn">shapevolve.callbacks</span>
+<span class="kn">from</span> <span class="nn">shapevolve.adjusters</span> <span class="kn">import</span> <span class="n">STRONG_DARK_ADJUSTER</span>
+<span class="kn">from</span> <span class="nn">shapevolve.drawers</span> <span class="kn">import</span> <span class="n">add_square</span>
+<span class="kn">from</span> <span class="nn">shapevolve.error_metrics</span> <span class="kn">import</span> <span class="n">structural_similarity_error</span>
+<span class="kn">from</span> <span class="nn">shapevolve.evolver</span> <span class="kn">import</span> <span class="n">Evolver</span>
+<span class="kn">from</span> <span class="nn">shapevolve.genome</span> <span class="kn">import</span> <span class="n">load_genome</span>
+<span class="kn">from</span> <span class="nn">shapevolve.preprocessors</span> <span class="kn">import</span> <span class="n">contrast_preprocess</span><span class="p">,</span> <span class="n">saturate_preprocess</span><span class="p">,</span> <span class="n">smooth_preprocess</span>
+<span class="kn">from</span> <span class="nn">shapevolve.utils</span> <span class="kn">import</span> <span class="n">get_image_path</span><span class="p">,</span> <span class="n">get_image</span>
+
+<span class="n">IMAGE_DIRECTORY</span> <span class="o">=</span> <span class="s2">&quot;samples&quot;</span>
+<span class="n">MONALISA</span> <span class="o">=</span> <span class="n">get_image_path</span><span class="p">(</span><span class="s2">&quot;monalisa.jpg&quot;</span><span class="p">,</span> <span class="n">IMAGE_DIRECTORY</span><span class="p">)</span>
+<span class="n">PEARLEARRING</span> <span class="o">=</span> <span class="n">get_image_path</span><span class="p">(</span><span class="s2">&quot;pearlearring.jpg&quot;</span><span class="p">,</span> <span class="n">IMAGE_DIRECTORY</span><span class="p">)</span>
+<span class="n">STARRYNIGHT</span> <span class="o">=</span> <span class="n">get_image_path</span><span class="p">(</span><span class="s2">&quot;starrynight.png&quot;</span><span class="p">,</span> <span class="n">IMAGE_DIRECTORY</span><span class="p">)</span>
+<span class="n">GREATWAVE</span> <span class="o">=</span> <span class="n">get_image_path</span><span class="p">(</span><span class="s2">&quot;greatwave.jpg&quot;</span><span class="p">,</span> <span class="n">IMAGE_DIRECTORY</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="standard_sample"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.samples.standard_sample">[docs]</a><span class="k">def</span> <span class="nf">standard_sample</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A standard sample function that illustrates how to use the module.</span>
+
+<span class="sd">    :param filepath: The absolute filepath of an input image.</span>
+<span class="sd">    :type filepath: str</span>
+<span class="sd">    :return: The evolved genome.</span>
+<span class="sd">    :rtype: Genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">evolver</span> <span class="o">=</span> <span class="n">Evolver</span><span class="p">(</span><span class="n">get_image</span><span class="p">(</span><span class="n">filepath</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">evolver</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="adjustment_sample"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.samples.adjustment_sample">[docs]</a><span class="k">def</span> <span class="nf">adjustment_sample</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A sample function that illustrates how to use adjusters.</span>
+
+<span class="sd">    :param filepath: The absolute filepath of an input image.</span>
+<span class="sd">    :type filepath: str</span>
+<span class="sd">    :return: The evolved genome.</span>
+<span class="sd">    :rtype: Genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">evolver</span> <span class="o">=</span> <span class="n">Evolver</span><span class="p">(</span><span class="n">get_image</span><span class="p">(</span><span class="n">filepath</span><span class="p">),</span> <span class="n">adjusters</span><span class="o">=</span><span class="p">[</span><span class="n">STRONG_DARK_ADJUSTER</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">evolver</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="preprocess_sample"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.samples.preprocess_sample">[docs]</a><span class="k">def</span> <span class="nf">preprocess_sample</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A sample function that illustrates how to use preprocesses.</span>
+
+<span class="sd">    :param filepath: The absolute filepath of an input image.</span>
+<span class="sd">    :type filepath: str</span>
+<span class="sd">    :return: The evolved genome.</span>
+<span class="sd">    :rtype: Genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">evolver</span> <span class="o">=</span> <span class="n">Evolver</span><span class="p">(</span><span class="n">get_image</span><span class="p">(</span><span class="n">filepath</span><span class="p">),</span> <span class="n">preprocesses</span><span class="o">=</span><span class="p">[</span><span class="n">saturate_preprocess</span><span class="p">,</span> <span class="n">contrast_preprocess</span><span class="p">,</span> <span class="n">smooth_preprocess</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">evolver</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="error_metric_sample"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.samples.error_metric_sample">[docs]</a><span class="k">def</span> <span class="nf">error_metric_sample</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A sample function that illustrates how to use custom error metrics.</span>
+
+<span class="sd">    :param filepath: The absolute filepath of an input image.</span>
+<span class="sd">    :type filepath: str</span>
+<span class="sd">    :return: The evolved genome.</span>
+<span class="sd">    :rtype: Genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">evolver</span> <span class="o">=</span> <span class="n">Evolver</span><span class="p">(</span><span class="n">get_image</span><span class="p">(</span><span class="n">filepath</span><span class="p">),</span> <span class="n">calculate_error</span><span class="o">=</span><span class="n">structural_similarity_error</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">evolver</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="draw_shape_sample"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.samples.draw_shape_sample">[docs]</a><span class="k">def</span> <span class="nf">draw_shape_sample</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A sample function that illustrates how to use custom shape drawing methods.</span>
+
+<span class="sd">    :param filepath: The absolute filepath of an input image.</span>
+<span class="sd">    :type filepath: str</span>
+<span class="sd">    :return: The evolved genome.</span>
+<span class="sd">    :rtype: Genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">evolver</span> <span class="o">=</span> <span class="n">Evolver</span><span class="p">(</span><span class="n">get_image</span><span class="p">(</span><span class="n">filepath</span><span class="p">),</span> <span class="n">draw</span><span class="o">=</span><span class="n">add_square</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">evolver</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="save_genome_sample"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.samples.save_genome_sample">[docs]</a><span class="k">def</span> <span class="nf">save_genome_sample</span><span class="p">(</span><span class="n">filepath_source</span><span class="p">,</span> <span class="n">filepath_to_save_to</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A sample function that illustrates how to save genomes.</span>
+
+<span class="sd">    :param filepath_source: The absolute filepath of an input image.</span>
+<span class="sd">    :type filepath_source: str</span>
+<span class="sd">    :param filepath_to_save_to: The filepath to save the genome.</span>
+<span class="sd">    :type filepath_to_save_to: str</span>
+<span class="sd">    :return: The evolved genome.</span>
+<span class="sd">    :rtype: Genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">evolver</span> <span class="o">=</span> <span class="n">Evolver</span><span class="p">(</span><span class="n">get_image</span><span class="p">(</span><span class="n">filepath_source</span><span class="p">))</span>
+    <span class="n">genome</span> <span class="o">=</span> <span class="n">evolver</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span>
+    <span class="n">genome</span><span class="o">.</span><span class="n">save_genome</span><span class="p">(</span><span class="n">filepath_to_save_to</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">genome</span></div>
+
+
+<div class="viewcode-block" id="load_genome_sample"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.samples.load_genome_sample">[docs]</a><span class="k">def</span> <span class="nf">load_genome_sample</span><span class="p">(</span><span class="n">filepath_source</span><span class="p">,</span> <span class="n">filepath_genome</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A sample function that illustrates how to load previously saved genomes.</span>
+
+<span class="sd">    :param filepath_source: The absolute filepath of an input image.</span>
+<span class="sd">    :type filepath_source: str</span>
+<span class="sd">    :param filepath_genome: The filepath to load the pre-evolved genome.</span>
+<span class="sd">    :type filepath_genome: str</span>
+<span class="sd">    :return: The evolved genome.</span>
+<span class="sd">    :rtype: Genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">evolver</span> <span class="o">=</span> <span class="n">Evolver</span><span class="p">(</span><span class="n">get_image</span><span class="p">(</span><span class="n">filepath_source</span><span class="p">),</span> <span class="n">saved_genome</span><span class="o">=</span><span class="n">load_genome</span><span class="p">(</span><span class="n">filepath_genome</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">evolver</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="save_image_sample"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.samples.save_image_sample">[docs]</a><span class="k">def</span> <span class="nf">save_image_sample</span><span class="p">(</span><span class="n">filepath_source</span><span class="p">,</span> <span class="n">filepath_to_save_to</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A sample function that illustrates how to save images from genomes.</span>
+
+<span class="sd">    :param filepath_source: The absolute filepath of an input image.</span>
+<span class="sd">    :type filepath_source: str</span>
+<span class="sd">    :param filepath_to_save_to: The filepath to save the evolved image to.</span>
+<span class="sd">    :type filepath_to_save_to: str</span>
+<span class="sd">    :return: The evolved genome.</span>
+<span class="sd">    :rtype: Genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">evolver</span> <span class="o">=</span> <span class="n">Evolver</span><span class="p">(</span><span class="n">get_image</span><span class="p">(</span><span class="n">filepath_source</span><span class="p">))</span>
+    <span class="n">genome</span> <span class="o">=</span> <span class="n">evolver</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">genome</span><span class="o">.</span><span class="n">render_scaled_image</span><span class="p">()</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">filepath_to_save_to</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">genome</span></div>
+
+
+<div class="viewcode-block" id="callback_sample"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.samples.callback_sample">[docs]</a><span class="k">def</span> <span class="nf">callback_sample</span><span class="p">(</span><span class="n">filepath_source</span><span class="p">,</span> <span class="n">filepath_csv</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A sample function that illustrates how to add callbacks to the evolve method.</span>
+
+<span class="sd">    :param filepath_source: The absolute filepath of an input image.</span>
+<span class="sd">    :type filepath_source: str</span>
+<span class="sd">    :param filepath_csv: The filepath to save CSV statistics to.</span>
+<span class="sd">    :type filepath_csv: str</span>
+<span class="sd">    :return: The evolved genome.</span>
+<span class="sd">    :rtype: Genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">evolver</span> <span class="o">=</span> <span class="n">Evolver</span><span class="p">(</span><span class="n">get_image</span><span class="p">(</span><span class="n">filepath_source</span><span class="p">))</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">callbacks</span><span class="o">.</span><span class="n">CSVLogger</span><span class="p">(</span><span class="n">filepath_csv</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">evolver</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">callbacks</span><span class="o">.</span><span class="n">default_callback</span><span class="p">,</span> <span class="n">logger</span><span class="o">.</span><span class="n">callback</span><span class="p">])</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Shapevolve</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../shapevolve.html">shapevolve package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Evan Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

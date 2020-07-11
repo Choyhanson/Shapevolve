@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shapevolve.genome &#8212; Shapevolve v1.0-alpha documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for shapevolve.genome</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;The Genome class represents a shape sequence and its various properties, from which an image can be built.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">shapevolve.utils</span> <span class="kn">import</span> <span class="n">unadjust</span>
+
+
+<div class="viewcode-block" id="MismatchedGenomeError"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.genome.MismatchedGenomeError">[docs]</a><span class="k">class</span> <span class="nc">MismatchedGenomeError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An error that occurs when two genomes do not share the same properties with one another.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="Genome"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.genome.Genome">[docs]</a><span class="k">class</span> <span class="nc">Genome</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;This class represents a shape sequence and its various properties, from which an image can be built.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">ratio</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">background_color</span><span class="p">,</span> <span class="n">adjusters</span><span class="p">,</span> <span class="n">palette</span><span class="p">,</span> <span class="n">draw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructs a genome based on certain properties.</span>
+
+<span class="sd">        :param sequence: A sequence of Gene objects that represent the shapes in the image.</span>
+<span class="sd">        :param ratio: The ratio between the evolution image dimensions and the original image dimensions.</span>
+<span class="sd">        :param height: The height of the image.</span>
+<span class="sd">        :param width: The width of the image.</span>
+<span class="sd">        :param background_color: The background color of the image.</span>
+<span class="sd">        :param adjusters: Reversible image adjusters that can be applied and unapplied to the image.</span>
+<span class="sd">        :param palette: A list of RGB color tuples that colors are referenced from.</span>
+<span class="sd">        :param draw: A function that is used to draw an image according to a Gene object.</span>
+<span class="sd">        :type sequence: List[Gene]</span>
+<span class="sd">        :type ratio: float</span>
+<span class="sd">        :type height: int</span>
+<span class="sd">        :type width: int</span>
+<span class="sd">        :type background_color: Tuple[int, int, int]</span>
+<span class="sd">        :type adjusters: List[Dict[str, Callable]]</span>
+<span class="sd">        :type palette: List[Tuple[int, int, int]]</span>
+<span class="sd">        :type draw: Callable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sequence</span> <span class="o">=</span> <span class="n">sequence</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ratio</span> <span class="o">=</span> <span class="n">ratio</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">background_color</span> <span class="o">=</span> <span class="n">background_color</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adjusters</span> <span class="o">=</span> <span class="n">adjusters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">palette</span> <span class="o">=</span> <span class="n">palette</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">draw</span> <span class="o">=</span> <span class="n">draw</span>
+
+<div class="viewcode-block" id="Genome.render_scaled_image"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.genome.Genome.render_scaled_image">[docs]</a>    <span class="k">def</span> <span class="nf">render_scaled_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">after_unadjustment</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fill_gaps</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Renders a scaled version of an image according to the genome&#39;s ratio field.</span>
+
+<span class="sd">        :param after_unadjustment: Whether the image has already been un-adjusted.</span>
+<span class="sd">        :param fill_gaps: Whether gaps should be filled in the scaled image.</span>
+<span class="sd">        :type after_unadjustment: bool</span>
+<span class="sd">        :type fill_gaps: bool</span>
+<span class="sd">        :return: The scaled image.</span>
+<span class="sd">        :rtype: ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">scaled_height</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio</span><span class="p">)</span>
+        <span class="n">scaled_width</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio</span><span class="p">)</span>
+        <span class="n">scaled_sequence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_sequence</span><span class="p">(</span><span class="n">fill_gaps</span><span class="p">)</span>
+        <span class="n">scaled_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">render_image</span><span class="p">(</span><span class="n">scaled_height</span><span class="p">,</span> <span class="n">scaled_width</span><span class="p">,</span> <span class="n">scaled_sequence</span><span class="p">,</span> <span class="n">after_unadjustment</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">scaled_image</span></div>
+
+<div class="viewcode-block" id="Genome.scale_sequence"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.genome.Genome.scale_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">scale_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fill_gaps</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generates a gene sequence with each gene scaled by the genome&#39;s ratio field.</span>
+
+<span class="sd">        :param fill_gaps: Whether the gene&#39;s radius should be adjusted to fill new gaps in the scaled image.</span>
+<span class="sd">        :type fill_gaps: bool</span>
+<span class="sd">        :return: The new Gene sequence.</span>
+<span class="sd">        :rtype: List[Gene]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">gene</span><span class="o">.</span><span class="n">get_scaled_version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ratio</span><span class="p">,</span> <span class="n">fill_gaps</span><span class="p">)</span> <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sequence</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Genome.render_raw_image"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.genome.Genome.render_raw_image">[docs]</a>    <span class="k">def</span> <span class="nf">render_raw_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">after_unadjustment</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Renders the image without any scaling.</span>
+
+<span class="sd">        :param after_unadjustment: Whether the image has already been un-adjusted.</span>
+<span class="sd">        :type after_unadjustment: bool</span>
+<span class="sd">        :return: The rendered image.</span>
+<span class="sd">        :rtype: ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">render_image</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sequence</span><span class="p">,</span> <span class="n">after_unadjustment</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Genome.render_image"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.genome.Genome.render_image">[docs]</a>    <span class="k">def</span> <span class="nf">render_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">after_unadjustment</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Renders an image according to certain parameters.</span>
+
+<span class="sd">        :param height: The height of the desired image.</span>
+<span class="sd">        :param width: The width of the desired image.</span>
+<span class="sd">        :param sequence: The gene sequence to draw on the image.</span>
+<span class="sd">        :param after_unadjustment: Whether the image has already been un-adjusted.</span>
+<span class="sd">        :type height: int</span>
+<span class="sd">        :type width: int</span>
+<span class="sd">        :type sequence: List[Gene]</span>
+<span class="sd">        :type after_unadjustment: bool</span>
+<span class="sd">        :return: The rendered image.</span>
+<span class="sd">        :rtype: ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="n">image</span><span class="p">[:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">background_color</span>
+
+        <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">after_unadjustment</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">unadjust</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">adjusters</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">image</span></div>
+
+<div class="viewcode-block" id="Genome.save_genome"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.genome.Genome.save_genome">[docs]</a>    <span class="k">def</span> <span class="nf">save_genome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Saves the genome to a file using pickle.</span>
+
+<span class="sd">        :param filename: The filename to save the genome to.</span>
+<span class="sd">        :type filename: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">genomeFile</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">genomeFile</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="is_compatible"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.genome.is_compatible">[docs]</a><span class="k">def</span> <span class="nf">is_compatible</span><span class="p">(</span><span class="n">genome1</span><span class="p">,</span> <span class="n">genome2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check whether two genomes could describe the same base image.</span>
+
+<span class="sd">    :param genome1: Genome 1, to be compared.</span>
+<span class="sd">    :param genome2: Genome 2, to be compared.</span>
+<span class="sd">    :type genome1: Genome</span>
+<span class="sd">    :type genome2: Genome</span>
+<span class="sd">    :return: Whether they are matched.</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    :raises: MismatchedGenomeError: If the genomes do not match.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">gene_checks</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;max_radius&#39;</span><span class="p">,</span> <span class="s1">&#39;min_radius&#39;</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="s1">&#39;num_colors&#39;</span><span class="p">]</span>
+    <span class="n">genome_checks</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="s1">&#39;background_color&#39;</span><span class="p">,</span> <span class="s1">&#39;adjusters&#39;</span><span class="p">,</span> <span class="s1">&#39;palette&#39;</span><span class="p">,</span> <span class="s1">&#39;draw&#39;</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">gene1</span><span class="p">,</span> <span class="n">gene2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">genome1</span><span class="o">.</span><span class="n">sequence</span><span class="p">,</span> <span class="n">genome2</span><span class="o">.</span><span class="n">sequence</span><span class="p">):</span>
+        <span class="n">gene1_dict</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="n">gene1</span><span class="p">)</span>
+        <span class="n">gene2_dict</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="n">gene2</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">check</span> <span class="ow">in</span> <span class="n">gene_checks</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">gene1_dict</span><span class="p">[</span><span class="n">check</span><span class="p">]</span> <span class="o">!=</span> <span class="n">gene2_dict</span><span class="p">[</span><span class="n">check</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="n">MismatchedGenomeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Genome match was inconsistent: </span><span class="si">{</span><span class="n">check</span><span class="si">}</span><span class="s2"> field was incorrect. &quot;</span>
+                                            <span class="sa">f</span><span class="s2">&quot;Please make sure the source image matches the genome you are &quot;</span>
+                                            <span class="sa">f</span><span class="s2">&quot;trying to load.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">genome1</span><span class="o">.</span><span class="n">sequence</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">genome2</span><span class="o">.</span><span class="n">sequence</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">MismatchedGenomeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Genome match was inconsistent: gene sequences had different lengths. &quot;</span>
+                                    <span class="sa">f</span><span class="s2">&quot;Please make sure the source image matches the genome you are &quot;</span>
+                                    <span class="sa">f</span><span class="s2">&quot;trying to load.&quot;</span><span class="p">)</span>
+
+    <span class="n">genome1dict</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="n">genome1</span><span class="p">)</span>
+    <span class="n">genome2dict</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="n">genome2</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">check</span> <span class="ow">in</span> <span class="n">genome_checks</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">genome1dict</span><span class="p">[</span><span class="n">check</span><span class="p">]</span> <span class="o">!=</span> <span class="n">genome2dict</span><span class="p">[</span><span class="n">check</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">MismatchedGenomeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Genome match was inconsistent: </span><span class="si">{</span><span class="n">check</span><span class="si">}</span><span class="s2"> field was incorrect. &quot;</span>
+                                        <span class="sa">f</span><span class="s2">&quot;Please make sure the source image matches the genome you are &quot;</span>
+                                        <span class="sa">f</span><span class="s2">&quot;trying to load.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="load_genome"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.genome.load_genome">[docs]</a><span class="k">def</span> <span class="nf">load_genome</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Loads a pickled Genome file.</span>
+
+<span class="sd">    :param filename: The filename of the genome to be loaded.</span>
+<span class="sd">    :type filename: str</span>
+<span class="sd">    :return: The loaded genome.</span>
+<span class="sd">    :rtype: Genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">genomeFile</span><span class="p">:</span>
+        <span class="n">genome</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">genomeFile</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">genome</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Shapevolve</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../shapevolve.html">shapevolve package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Evan Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

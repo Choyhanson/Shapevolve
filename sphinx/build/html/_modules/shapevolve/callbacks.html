@@ -1,0 +1,517 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shapevolve.callbacks &#8212; Shapevolve v1.0-alpha documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for shapevolve.callbacks</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Callbacks that can be given to the Evolver class, to be run when a successful change is applied to the genome.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="kn">from</span> <span class="nn">shapevolve.utils</span> <span class="kn">import</span> <span class="n">show_image</span>
+
+<span class="n">_display</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="default_callback"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.default_callback">[docs]</a><span class="k">def</span> <span class="nf">default_callback</span><span class="p">(</span><span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                     <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The default callback that the Evolver class uses. Currently visual_callback.</span>
+
+<span class="sd">    :param offspring: The total number of offspring already processed.</span>
+<span class="sd">    :param changes: The total number of changes already applied to the genome.</span>
+<span class="sd">    :param loop_index: The total number of loops already performed.</span>
+<span class="sd">    :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.</span>
+<span class="sd">    :param error: The error of the current genome compared to the base image.</span>
+<span class="sd">    :param complex_mutation: Whether complex mutations are being applied or not.</span>
+<span class="sd">    :param best_image: The best image so far.</span>
+<span class="sd">    :param genome: The genome for the best image so far.</span>
+<span class="sd">    :type offspring: int</span>
+<span class="sd">    :type changes: int</span>
+<span class="sd">    :type loop_index: int</span>
+<span class="sd">    :type num_mutation_type_switches: int</span>
+<span class="sd">    :type error: float</span>
+<span class="sd">    :type complex_mutation: bool</span>
+<span class="sd">    :type best_image: ndarray</span>
+<span class="sd">    :type genome: Genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">visual_callback</span><span class="p">(</span><span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                    <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">)</span></div>
+
+
+<span class="c1"># noinspection PyUnusedLocal,PyUnusedLocal,PyUnusedLocal,PyUnusedLocal,PyUnusedLocal</span>
+<div class="viewcode-block" id="visual_callback"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.visual_callback">[docs]</a><span class="k">def</span> <span class="nf">visual_callback</span><span class="p">(</span><span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                    <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A simple callback that uses matplotlib to provide a live update of the image on the screen.</span>
+
+<span class="sd">    :param offspring: The total number of offspring already processed.</span>
+<span class="sd">    :param changes: The total number of changes already applied to the genome.</span>
+<span class="sd">    :param loop_index: The total number of loops already performed.</span>
+<span class="sd">    :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.</span>
+<span class="sd">    :param error: The error of the current genome compared to the base image.</span>
+<span class="sd">    :param complex_mutation: Whether complex mutations are being applied or not.</span>
+<span class="sd">    :param best_image: The best image so far.</span>
+<span class="sd">    :param genome: The genome for the best image so far.</span>
+<span class="sd">    :type offspring: int</span>
+<span class="sd">    :type changes: int</span>
+<span class="sd">    :type loop_index: int</span>
+<span class="sd">    :type num_mutation_type_switches: int</span>
+<span class="sd">    :type error: float</span>
+<span class="sd">    :type complex_mutation: bool</span>
+<span class="sd">    :type best_image: ndarray</span>
+<span class="sd">    :type genome: Genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_visualize</span><span class="p">(</span><span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="o">.</span><span class="n">adjusters</span><span class="p">,</span> <span class="n">changes</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="quiet_visual_callback"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.quiet_visual_callback">[docs]</a><span class="k">def</span> <span class="nf">quiet_visual_callback</span><span class="p">(</span><span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                          <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The same thing as visual_callback, but this only runs every 50 generations.</span>
+
+<span class="sd">    :param offspring: The total number of offspring already processed.</span>
+<span class="sd">    :param changes: The total number of changes already applied to the genome.</span>
+<span class="sd">    :param loop_index: The total number of loops already performed.</span>
+<span class="sd">    :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.</span>
+<span class="sd">    :param error: The error of the current genome compared to the base image.</span>
+<span class="sd">    :param complex_mutation: Whether complex mutations are being applied or not.</span>
+<span class="sd">    :param best_image: The best image so far.</span>
+<span class="sd">    :param genome: The genome for the best image so far.</span>
+<span class="sd">    :type offspring: int</span>
+<span class="sd">    :type changes: int</span>
+<span class="sd">    :type loop_index: int</span>
+<span class="sd">    :type num_mutation_type_switches: int</span>
+<span class="sd">    :type error: float</span>
+<span class="sd">    :type complex_mutation: bool</span>
+<span class="sd">    :type best_image: ndarray</span>
+<span class="sd">    :type genome: Genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">changes</span> <span class="o">%</span> <span class="mi">50</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">visual_callback</span><span class="p">(</span><span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                        <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">)</span></div>
+
+
+<span class="c1"># noinspection PyUnusedLocal,PyUnusedLocal</span>
+<div class="viewcode-block" id="verbose_callback"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.verbose_callback">[docs]</a><span class="k">def</span> <span class="nf">verbose_callback</span><span class="p">(</span><span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                     <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A callback that prints the status of the evolution into standard output.</span>
+
+<span class="sd">    :param offspring: The total number of offspring already processed.</span>
+<span class="sd">    :param changes: The total number of changes already applied to the genome.</span>
+<span class="sd">    :param loop_index: The total number of loops already performed.</span>
+<span class="sd">    :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.</span>
+<span class="sd">    :param error: The error of the current genome compared to the base image.</span>
+<span class="sd">    :param complex_mutation: Whether complex mutations are being applied or not.</span>
+<span class="sd">    :param best_image: The best image so far.</span>
+<span class="sd">    :param genome: The genome for the best image so far.</span>
+<span class="sd">    :type offspring: int</span>
+<span class="sd">    :type changes: int</span>
+<span class="sd">    :type loop_index: int</span>
+<span class="sd">    :type num_mutation_type_switches: int</span>
+<span class="sd">    :type error: float</span>
+<span class="sd">    :type complex_mutation: bool</span>
+<span class="sd">    :type best_image: ndarray</span>
+<span class="sd">    :type genome: Genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total offspring: </span><span class="si">{</span><span class="n">offspring</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total changes: </span><span class="si">{</span><span class="n">changes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total loop iterations: </span><span class="si">{</span><span class="n">loop_index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total mutation type switches: </span><span class="si">{</span><span class="n">num_mutation_type_switches</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Current error: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">extreme</span> <span class="o">=</span> <span class="s2">&quot;Yes&quot;</span> <span class="k">if</span> <span class="n">complex_mutation</span> <span class="k">else</span> <span class="s2">&quot;No&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Is currently in a complex mutation: </span><span class="si">{</span><span class="n">extreme</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="quiet_verbose_callback"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.quiet_verbose_callback">[docs]</a><span class="k">def</span> <span class="nf">quiet_verbose_callback</span><span class="p">(</span><span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                           <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The same thing as verbose_callback, but this only runs every 50 generations.</span>
+
+<span class="sd">    :param offspring: The total number of offspring already processed.</span>
+<span class="sd">    :param changes: The total number of changes already applied to the genome.</span>
+<span class="sd">    :param loop_index: The total number of loops already performed.</span>
+<span class="sd">    :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.</span>
+<span class="sd">    :param error: The error of the current genome compared to the base image.</span>
+<span class="sd">    :param complex_mutation: Whether complex mutations are being applied or not.</span>
+<span class="sd">    :param best_image: The best image so far.</span>
+<span class="sd">    :param genome: The genome for the best image so far.</span>
+<span class="sd">    :type offspring: int</span>
+<span class="sd">    :type changes: int</span>
+<span class="sd">    :type loop_index: int</span>
+<span class="sd">    :type num_mutation_type_switches: int</span>
+<span class="sd">    :type error: float</span>
+<span class="sd">    :type complex_mutation: bool</span>
+<span class="sd">    :type best_image: ndarray</span>
+<span class="sd">    :type genome: Genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">changes</span> <span class="o">%</span> <span class="mi">50</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">verbose_callback</span><span class="p">(</span><span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                         <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_visualize</span><span class="p">(</span><span class="n">best_image</span><span class="p">,</span> <span class="n">adjusters</span><span class="p">,</span> <span class="n">changes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Displays an updated image in a matplotlib window.</span>
+
+<span class="sd">    :param best_image: The image to be displayed.</span>
+<span class="sd">    :param adjusters: Adjusters to be reversed for the image.</span>
+<span class="sd">    :param changes: The current generation number.</span>
+<span class="sd">    :type best_image: ndarray</span>
+<span class="sd">    :type adjusters: List[Dict[str, Callable]]</span>
+<span class="sd">    :type changes: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">_display</span>
+    <span class="k">if</span> <span class="n">_display</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_display</span> <span class="o">=</span> <span class="n">show_image</span><span class="p">(</span><span class="n">best_image</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">adjusters</span><span class="o">=</span><span class="n">adjusters</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">show_image</span><span class="p">(</span><span class="n">best_image</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="n">_display</span><span class="p">,</span> <span class="n">adjusters</span><span class="o">=</span><span class="n">adjusters</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="GenomeSaver"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.GenomeSaver">[docs]</a><span class="k">class</span> <span class="nc">GenomeSaver</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A class that defines a callback where genomes are saved to files.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">genome_root</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructs a genome saver class that takes a given root file path.</span>
+
+<span class="sd">        :param genome_root: The file path where genomes should be saved.</span>
+<span class="sd">        :type genome_root: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">genome_root</span>
+
+<div class="viewcode-block" id="GenomeSaver.callback"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.GenomeSaver.callback">[docs]</a>    <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                 <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A callback that saves genomes to a filepath.</span>
+
+<span class="sd">        :param offspring: The total number of offspring already processed.</span>
+<span class="sd">        :param changes: The total number of changes already applied to the genome.</span>
+<span class="sd">        :param loop_index: The total number of loops already performed.</span>
+<span class="sd">        :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.</span>
+<span class="sd">        :param error: The error of the current genome compared to the base image.</span>
+<span class="sd">        :param complex_mutation: Whether complex mutations are being applied or not.</span>
+<span class="sd">        :param best_image: The best image so far.</span>
+<span class="sd">        :param genome: The genome for the best image so far.</span>
+<span class="sd">        :type offspring: int</span>
+<span class="sd">        :type changes: int</span>
+<span class="sd">        :type loop_index: int</span>
+<span class="sd">        :type num_mutation_type_switches: int</span>
+<span class="sd">        :type error: float</span>
+<span class="sd">        :type complex_mutation: bool</span>
+<span class="sd">        :type best_image: ndarray</span>
+<span class="sd">        :type genome: Genome</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">genome</span><span class="o">.</span><span class="n">save_genome</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;_gen</span><span class="si">{</span><span class="n">changes</span><span class="si">}</span><span class="s2">.genome&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="QuietGenomeSaver"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.QuietGenomeSaver">[docs]</a><span class="k">class</span> <span class="nc">QuietGenomeSaver</span><span class="p">(</span><span class="n">GenomeSaver</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A subclass of GenomeSaver that only saves every 50 generations.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="QuietGenomeSaver.callback"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.QuietGenomeSaver.callback">[docs]</a>    <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                 <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs the equivalent callback in GenomeSaver every 50 generations.</span>
+
+<span class="sd">        :param offspring: The total number of offspring already processed.</span>
+<span class="sd">        :param changes: The total number of changes already applied to the genome.</span>
+<span class="sd">        :param loop_index: The total number of loops already performed.</span>
+<span class="sd">        :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.</span>
+<span class="sd">        :param error: The error of the current genome compared to the base image.</span>
+<span class="sd">        :param complex_mutation: Whether complex mutations are being applied or not.</span>
+<span class="sd">        :param best_image: The best image so far.</span>
+<span class="sd">        :param genome: The genome for the best image so far.</span>
+<span class="sd">        :type offspring: int</span>
+<span class="sd">        :type changes: int</span>
+<span class="sd">        :type loop_index: int</span>
+<span class="sd">        :type num_mutation_type_switches: int</span>
+<span class="sd">        :type error: float</span>
+<span class="sd">        :type complex_mutation: bool</span>
+<span class="sd">        :type best_image: ndarray</span>
+<span class="sd">        :type genome: Genome</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">changes</span> <span class="o">%</span> <span class="mi">50</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">GenomeSaver</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                                 <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="CSVLogger"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.CSVLogger">[docs]</a><span class="k">class</span> <span class="nc">CSVLogger</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A class that defines callbacks which record statistics into a CSV file.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_filepath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A constructor for the class that stores a path to a CSV file.</span>
+
+<span class="sd">        :param csv_filepath: The filepath of the CSV file that statistics will be written to.</span>
+<span class="sd">        :type csv_filepath: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_filepath</span> <span class="o">=</span> <span class="n">csv_filepath</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_filepath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>  <span class="c1"># Write the headers for the CSV file.</span>
+            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;offspring&quot;</span><span class="p">,</span> <span class="s2">&quot;generation&quot;</span><span class="p">,</span> <span class="s2">&quot;loop_index&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">])</span>
+
+<div class="viewcode-block" id="CSVLogger.callback"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.CSVLogger.callback">[docs]</a>    <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                 <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A callback that stores offspring, generation, loop index, and error into the class&#39;s CSV file.</span>
+
+<span class="sd">        :param offspring: The total number of offspring already processed.</span>
+<span class="sd">        :param changes: The total number of changes already applied to the genome.</span>
+<span class="sd">        :param loop_index: The total number of loops already performed.</span>
+<span class="sd">        :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.</span>
+<span class="sd">        :param error: The error of the current genome compared to the base image.</span>
+<span class="sd">        :param complex_mutation: Whether complex mutations are being applied or not.</span>
+<span class="sd">        :param best_image: The best image so far.</span>
+<span class="sd">        :param genome: The genome for the best image so far.</span>
+<span class="sd">        :type offspring: int</span>
+<span class="sd">        :type changes: int</span>
+<span class="sd">        :type loop_index: int</span>
+<span class="sd">        :type num_mutation_type_switches: int</span>
+<span class="sd">        :type error: float</span>
+<span class="sd">        :type complex_mutation: bool</span>
+<span class="sd">        :type best_image: ndarray</span>
+<span class="sd">        :type genome: Genome</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csv_filepath</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">error</span><span class="p">])</span></div></div>
+
+
+<div class="viewcode-block" id="QuietCSVLogger"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.QuietCSVLogger">[docs]</a><span class="k">class</span> <span class="nc">QuietCSVLogger</span><span class="p">(</span><span class="n">CSVLogger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A subclass of CSVLogger that only logs every 50 generations.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="QuietCSVLogger.callback"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.QuietCSVLogger.callback">[docs]</a>    <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                 <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs the equivalent callback in CSVLogger every 50 generations.</span>
+
+<span class="sd">        :param offspring: The total number of offspring already processed.</span>
+<span class="sd">        :param changes: The total number of changes already applied to the genome.</span>
+<span class="sd">        :param loop_index: The total number of loops already performed.</span>
+<span class="sd">        :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.</span>
+<span class="sd">        :param error: The error of the current genome compared to the base image.</span>
+<span class="sd">        :param complex_mutation: Whether complex mutations are being applied or not.</span>
+<span class="sd">        :param best_image: The best image so far.</span>
+<span class="sd">        :param genome: The genome for the best image so far.</span>
+<span class="sd">        :type offspring: int</span>
+<span class="sd">        :type changes: int</span>
+<span class="sd">        :type loop_index: int</span>
+<span class="sd">        :type num_mutation_type_switches: int</span>
+<span class="sd">        :type error: float</span>
+<span class="sd">        :type complex_mutation: bool</span>
+<span class="sd">        :type best_image: ndarray</span>
+<span class="sd">        :type genome: Genome</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">changes</span> <span class="o">%</span> <span class="mi">50</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">CSVLogger</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                               <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ImageSaver"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.ImageSaver">[docs]</a><span class="k">class</span> <span class="nc">ImageSaver</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A class that defines a callback where images built during evolution are saved.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_root</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A constructor for the class that defines a root filepath for saved images.</span>
+
+<span class="sd">        :param image_root: The root filepath for saved images.</span>
+<span class="sd">        :type image_root: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">image_root</span>
+
+<div class="viewcode-block" id="ImageSaver.callback"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.ImageSaver.callback">[docs]</a>    <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                 <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A callback that saves the best image so far into a png file.</span>
+
+<span class="sd">        :param offspring: The total number of offspring already processed.</span>
+<span class="sd">        :param changes: The total number of changes already applied to the genome.</span>
+<span class="sd">        :param loop_index: The total number of loops already performed.</span>
+<span class="sd">        :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.</span>
+<span class="sd">        :param error: The error of the current genome compared to the base image.</span>
+<span class="sd">        :param complex_mutation: Whether complex mutations are being applied or not.</span>
+<span class="sd">        :param best_image: The best image so far.</span>
+<span class="sd">        :param genome: The genome for the best image so far.</span>
+<span class="sd">        :type offspring: int</span>
+<span class="sd">        :type changes: int</span>
+<span class="sd">        :type loop_index: int</span>
+<span class="sd">        :type num_mutation_type_switches: int</span>
+<span class="sd">        :type error: float</span>
+<span class="sd">        :type complex_mutation: bool</span>
+<span class="sd">        :type best_image: ndarray</span>
+<span class="sd">        :type genome: Genome</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;_img</span><span class="si">{</span><span class="n">changes</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span> <span class="n">best_image</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;The path given to ImageSaver was not valid.&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="QuietImageSaver"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.QuietImageSaver">[docs]</a><span class="k">class</span> <span class="nc">QuietImageSaver</span><span class="p">(</span><span class="n">ImageSaver</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A subclass of ImageSaver that only saves images every 50 generations.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="QuietImageSaver.callback"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.QuietImageSaver.callback">[docs]</a>    <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                 <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs the equivalent method in ImageSaver every 50 generations.</span>
+
+<span class="sd">        :param offspring: The total number of offspring already processed.</span>
+<span class="sd">        :param changes: The total number of changes already applied to the genome.</span>
+<span class="sd">        :param loop_index: The total number of loops already performed.</span>
+<span class="sd">        :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.</span>
+<span class="sd">        :param error: The error of the current genome compared to the base image.</span>
+<span class="sd">        :param complex_mutation: Whether complex mutations are being applied or not.</span>
+<span class="sd">        :param best_image: The best image so far.</span>
+<span class="sd">        :param genome: The genome for the best image so far.</span>
+<span class="sd">        :type offspring: int</span>
+<span class="sd">        :type changes: int</span>
+<span class="sd">        :type loop_index: int</span>
+<span class="sd">        :type num_mutation_type_switches: int</span>
+<span class="sd">        :type error: float</span>
+<span class="sd">        :type complex_mutation: bool</span>
+<span class="sd">        :type best_image: ndarray</span>
+<span class="sd">        :type genome: Genome</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">changes</span> <span class="o">%</span> <span class="mi">50</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ImageSaver</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                                <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="HighQualityImageSaver"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.HighQualityImageSaver">[docs]</a><span class="k">class</span> <span class="nc">HighQualityImageSaver</span><span class="p">(</span><span class="n">ImageSaver</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A subclass of ImageSaver that scales images to the original resolution before saving them.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="HighQualityImageSaver.callback"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.HighQualityImageSaver.callback">[docs]</a>    <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                 <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A callback that scales an image before providing it to the equivalent method in ImageSaver.</span>
+
+<span class="sd">        :param offspring: The total number of offspring already processed.</span>
+<span class="sd">        :param changes: The total number of changes already applied to the genome.</span>
+<span class="sd">        :param loop_index: The total number of loops already performed.</span>
+<span class="sd">        :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.</span>
+<span class="sd">        :param error: The error of the current genome compared to the base image.</span>
+<span class="sd">        :param complex_mutation: Whether complex mutations are being applied or not.</span>
+<span class="sd">        :param best_image: The best image so far.</span>
+<span class="sd">        :param genome: The genome for the best image so far.</span>
+<span class="sd">        :type offspring: int</span>
+<span class="sd">        :type changes: int</span>
+<span class="sd">        :type loop_index: int</span>
+<span class="sd">        :type num_mutation_type_switches: int</span>
+<span class="sd">        :type error: float</span>
+<span class="sd">        :type complex_mutation: bool</span>
+<span class="sd">        :type best_image: ndarray</span>
+<span class="sd">        :type genome: Genome</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">genome</span><span class="o">.</span><span class="n">render_scaled_image</span><span class="p">()</span>
+        <span class="n">ImageSaver</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                            <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">genome</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="QuietHighQualityImageSaver"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.QuietHighQualityImageSaver">[docs]</a><span class="k">class</span> <span class="nc">QuietHighQualityImageSaver</span><span class="p">(</span><span class="n">HighQualityImageSaver</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A subclass of HighQualityImageSaver that only saves images every 50 generations.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="QuietHighQualityImageSaver.callback"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.callbacks.QuietHighQualityImageSaver.callback">[docs]</a>    <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                 <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs the callback from HighQualityImageSaver every 50 generations.</span>
+
+<span class="sd">        :param offspring: The total number of offspring already processed.</span>
+<span class="sd">        :param changes: The total number of changes already applied to the genome.</span>
+<span class="sd">        :param loop_index: The total number of loops already performed.</span>
+<span class="sd">        :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.</span>
+<span class="sd">        :param error: The error of the current genome compared to the base image.</span>
+<span class="sd">        :param complex_mutation: Whether complex mutations are being applied or not.</span>
+<span class="sd">        :param best_image: The best image so far.</span>
+<span class="sd">        :param genome: The genome for the best image so far.</span>
+<span class="sd">        :type offspring: int</span>
+<span class="sd">        :type changes: int</span>
+<span class="sd">        :type loop_index: int</span>
+<span class="sd">        :type num_mutation_type_switches: int</span>
+<span class="sd">        :type error: float</span>
+<span class="sd">        :type complex_mutation: bool</span>
+<span class="sd">        :type best_image: ndarray</span>
+<span class="sd">        :type genome: Genome</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">changes</span> <span class="o">%</span> <span class="mi">50</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">HighQualityImageSaver</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offspring</span><span class="p">,</span> <span class="n">changes</span><span class="p">,</span> <span class="n">loop_index</span><span class="p">,</span> <span class="n">num_mutation_type_switches</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                                           <span class="n">complex_mutation</span><span class="p">,</span> <span class="n">best_image</span><span class="p">,</span> <span class="n">genome</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Shapevolve</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../shapevolve.html">shapevolve package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Evan Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
