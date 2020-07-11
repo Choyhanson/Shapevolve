@@ -3,7 +3,7 @@
 import cv2
 
 # noinspection PyUnresolvedReferences
-import shapevolve.callbacks
+from shapevolve import callbacks
 from shapevolve.adjusters import STRONG_DARK_ADJUSTER
 from shapevolve.drawers import add_square
 from shapevolve.error_metrics import structural_similarity_error

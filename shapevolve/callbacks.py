@@ -2,6 +2,8 @@
 
 import csv
 
+from matplotlib.pyplot import savefig
+
 import cv2
 
 from shapevolve.utils import show_image
@@ -162,14 +164,18 @@ def _visualize(best_image, adjusters, changes):
 class GenomeSaver:
     """A class that defines a callback where genomes are saved to files."""
 
-    def __init__(self, genome_root):
+    def __init__(self, genome_root, frequency=1):
         """Constructs a genome saver class that takes a given root file path.
 
         :param genome_root: The file path where genomes should be saved.
+        :param frequency: The frequency at which files will be saved.
         :type genome_root: str
+        :type frequency: int
         """
         self.root = genome_root
+        self.frequency = frequency
 
+    # noinspection PyUnusedLocal
     def callback(self, offspring, changes, loop_index, num_mutation_type_switches, error,
                  complex_mutation, best_image, genome):
         """A callback that saves genomes to a filepath.
@@ -191,52 +197,28 @@ class GenomeSaver:
         :type best_image: ndarray
         :type genome: Genome
         """
-        genome.save_genome(self.root + f"_gen{changes}.genome")
-
-
-class QuietGenomeSaver(GenomeSaver):
-    """A subclass of GenomeSaver that only saves every 50 generations."""
-
-    def callback(self, offspring, changes, loop_index, num_mutation_type_switches, error,
-                 complex_mutation, best_image, genome):
-        """Runs the equivalent callback in GenomeSaver every 50 generations.
-
-        :param offspring: The total number of offspring already processed.
-        :param changes: The total number of changes already applied to the genome.
-        :param loop_index: The total number of loops already performed.
-        :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.
-        :param error: The error of the current genome compared to the base image.
-        :param complex_mutation: Whether complex mutations are being applied or not.
-        :param best_image: The best image so far.
-        :param genome: The genome for the best image so far.
-        :type offspring: int
-        :type changes: int
-        :type loop_index: int
-        :type num_mutation_type_switches: int
-        :type error: float
-        :type complex_mutation: bool
-        :type best_image: ndarray
-        :type genome: Genome
-        """
-        if changes % 50 == 0:
-            GenomeSaver.callback(self, offspring, changes, loop_index, num_mutation_type_switches, error,
-                                 complex_mutation, best_image, genome)
+        if changes % self.frequency == 0:
+            genome.save_genome(self.root + f"_gen{changes:04d}.genome")
 
 
 class CSVLogger:
     """A class that defines callbacks which record statistics into a CSV file."""
 
-    def __init__(self, csv_filepath):
+    def __init__(self, csv_filepath, frequency=1):
         """A constructor for the class that stores a path to a CSV file.
 
         :param csv_filepath: The filepath of the CSV file that statistics will be written to.
+        :param frequency: The frequency at which stats will be saved.
         :type csv_filepath: str
+        :type frequency: int
         """
         self.csv_filepath = csv_filepath
+        self.frequency = frequency
         with open(csv_filepath, 'w', newline='') as file:  # Write the headers for the CSV file.
             writer = csv.writer(file)
             writer.writerow(["offspring", "generation", "loop_index", "error"])
 
+    # noinspection PyUnusedLocal
     def callback(self, offspring, changes, loop_index, num_mutation_type_switches, error,
                  complex_mutation, best_image, genome):
         """A callback that stores offspring, generation, loop index, and error into the class's CSV file.
@@ -258,50 +240,25 @@ class CSVLogger:
         :type best_image: ndarray
         :type genome: Genome
         """
-        with open(self.csv_filepath, 'a', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow([offspring, changes, loop_index, error])
-
-
-class QuietCSVLogger(CSVLogger):
-    """A subclass of CSVLogger that only logs every 50 generations."""
-
-    def callback(self, offspring, changes, loop_index, num_mutation_type_switches, error,
-                 complex_mutation, best_image, genome):
-        """Runs the equivalent callback in CSVLogger every 50 generations.
-
-        :param offspring: The total number of offspring already processed.
-        :param changes: The total number of changes already applied to the genome.
-        :param loop_index: The total number of loops already performed.
-        :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.
-        :param error: The error of the current genome compared to the base image.
-        :param complex_mutation: Whether complex mutations are being applied or not.
-        :param best_image: The best image so far.
-        :param genome: The genome for the best image so far.
-        :type offspring: int
-        :type changes: int
-        :type loop_index: int
-        :type num_mutation_type_switches: int
-        :type error: float
-        :type complex_mutation: bool
-        :type best_image: ndarray
-        :type genome: Genome
-        """
-        if changes % 50 == 0:
-            CSVLogger.callback(self, offspring, changes, loop_index, num_mutation_type_switches, error,
-                               complex_mutation, best_image, genome)
+        if changes % self.frequency == 0:
+            with open(self.csv_filepath, 'a', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow([offspring, changes, loop_index, error])
 
 
 class ImageSaver:
     """A class that defines a callback where images built during evolution are saved."""
 
-    def __init__(self, image_root):
+    def __init__(self, image_root, frequency=1):
         """A constructor for the class that defines a root filepath for saved images.
 
         :param image_root: The root filepath for saved images.
+        :param frequency: The frequency at which files will be saved.
         :type image_root: str
+        :type frequency: int
         """
         self.root = image_root
+        self.frequency = frequency
 
     def callback(self, offspring, changes, loop_index, num_mutation_type_switches, error,
                  complex_mutation, best_image, genome):
@@ -324,37 +281,9 @@ class ImageSaver:
         :type best_image: ndarray
         :type genome: Genome
         """
-        if not cv2.imwrite(self.root + f"_img{changes}.png", best_image):
-            raise FileNotFoundError("The path given to ImageSaver was not valid.")
-
-
-class QuietImageSaver(ImageSaver):
-    """A subclass of ImageSaver that only saves images every 50 generations."""
-
-    def callback(self, offspring, changes, loop_index, num_mutation_type_switches, error,
-                 complex_mutation, best_image, genome):
-        """Runs the equivalent method in ImageSaver every 50 generations.
-
-        :param offspring: The total number of offspring already processed.
-        :param changes: The total number of changes already applied to the genome.
-        :param loop_index: The total number of loops already performed.
-        :param num_mutation_type_switches: The total number of switches between simple and complex mutations so far.
-        :param error: The error of the current genome compared to the base image.
-        :param complex_mutation: Whether complex mutations are being applied or not.
-        :param best_image: The best image so far.
-        :param genome: The genome for the best image so far.
-        :type offspring: int
-        :type changes: int
-        :type loop_index: int
-        :type num_mutation_type_switches: int
-        :type error: float
-        :type complex_mutation: bool
-        :type best_image: ndarray
-        :type genome: Genome
-        """
-        if changes % 50 == 0:
-            ImageSaver.callback(self, offspring, changes, loop_index, num_mutation_type_switches, error,
-                                complex_mutation, best_image, genome)
+        if changes % self.frequency == 0:
+            if not cv2.imwrite(self.root + f"_img{changes:04d}.png", best_image):
+                raise FileNotFoundError("The path given to ImageSaver was not valid.")
 
 
 class HighQualityImageSaver(ImageSaver):
@@ -386,12 +315,12 @@ class HighQualityImageSaver(ImageSaver):
                             complex_mutation, image, genome)
 
 
-class QuietHighQualityImageSaver(HighQualityImageSaver):
-    """A subclass of HighQualityImageSaver that only saves images every 50 generations."""
+class MatplotImageSaver(ImageSaver):
+    """A class that defines a callback where images shown by matplotlib during evolution are saved. Must be used with a variant of visual_callback in the same list."""
 
     def callback(self, offspring, changes, loop_index, num_mutation_type_switches, error,
                  complex_mutation, best_image, genome):
-        """Runs the callback from HighQualityImageSaver every 50 generations.
+        """A callback that saves the best image so far into a png file.
 
         :param offspring: The total number of offspring already processed.
         :param changes: The total number of changes already applied to the genome.
@@ -410,6 +339,5 @@ class QuietHighQualityImageSaver(HighQualityImageSaver):
         :type best_image: ndarray
         :type genome: Genome
         """
-        if changes % 50 == 0:
-            HighQualityImageSaver.callback(self, offspring, changes, loop_index, num_mutation_type_switches, error,
-                                           complex_mutation, best_image, genome)
+        if changes % self.frequency == 0:
+            savefig(self.root + f"_fig{changes:04d}.png")
