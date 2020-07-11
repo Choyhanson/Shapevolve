@@ -9,8 +9,9 @@ Evan Zheng, July 2020.
 Initially designed on Google Colab with Jupyter Notebooks. Module built
 with assistance from PyCharm.
 
+.. image:: ./images/starrynightgif.gif
 
-Sample images:
+Sample Results:
 --------------
 
 The Starry Night:
