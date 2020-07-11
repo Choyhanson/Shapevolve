@@ -8,11 +8,12 @@ from matplotlib.pyplot import show
 from shapevolve.evolver import Evolver
 from shapevolve.genome import load_genome
 from shapevolve.utils import get_image
+from shapevolve import __version__
 
 
 def main():
     """Run the application."""
-    parser = ArgumentParser(description="Circlevolve CLI")
+    parser = ArgumentParser(description=f"Circlevolve CLI, {__version__}")
     parser.add_argument("image", type=str, help="Path to base image for evolution")
     parser.add_argument("--saved-genome", default=None, type=str, help="Path to saved genome for continued evolution")
     parser.add_argument("--num-shapes", default=1000, type=int, help="Number of shapes to draw with")
