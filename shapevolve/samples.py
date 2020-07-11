@@ -2,14 +2,15 @@
 
 import cv2
 
-import callbacks
-from adjusters import STRONG_DARK_ADJUSTER
-from drawers import add_square
-from error_metrics import structural_similarity_error
-from evolver import Evolver
-from genome import load_genome
-from preprocessors import contrast_preprocess, saturate_preprocess, smooth_preprocess
-from utils import get_image_path, get_image
+# noinspection PyUnresolvedReferences
+import shapevolve.callbacks
+from shapevolve.adjusters import STRONG_DARK_ADJUSTER
+from shapevolve.drawers import add_square
+from shapevolve.error_metrics import structural_similarity_error
+from shapevolve.evolver import Evolver
+from shapevolve.genome import load_genome
+from shapevolve.preprocessors import contrast_preprocess, saturate_preprocess, smooth_preprocess
+from shapevolve.utils import get_image_path, get_image
 
 IMAGE_DIRECTORY = "samples"
 MONALISA = get_image_path("monalisa.jpg", IMAGE_DIRECTORY)

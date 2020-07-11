@@ -4,7 +4,7 @@ import csv
 
 import cv2
 
-from utils import show_image
+from shapevolve.utils import show_image
 
 _display = None
 

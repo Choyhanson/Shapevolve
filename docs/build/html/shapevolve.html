@@ -1,0 +1,1414 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shapevolve package &#8212; Shapevolve v1.0-alpha documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Sample images:" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="shapevolve-package">
+<h1>shapevolve package<a class="headerlink" href="#shapevolve-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-shapevolve.adjusters">
+<span id="shapevolve-adjusters-module"></span><h2>shapevolve.adjusters module<a class="headerlink" href="#module-shapevolve.adjusters" title="Permalink to this headline">¶</a></h2>
+<p>Adjusters that modify the source image during evolution, but are undone for the final product.</p>
+<dl class="py function">
+<dt id="shapevolve.adjusters.strong_dark_adjust">
+<code class="sig-prename descclassname">shapevolve.adjusters.</code><code class="sig-name descname">strong_dark_adjust</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">original_image</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/adjusters.html#strong_dark_adjust"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.adjusters.strong_dark_adjust" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that applies a strong brightening filter to a dark image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>original_image</strong> (<em>ndarray</em>) – The original image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The image with the adjustment applied.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.adjusters.strong_dark_unadjust">
+<code class="sig-prename descclassname">shapevolve.adjusters.</code><code class="sig-name descname">strong_dark_unadjust</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">adjusted_image</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/adjusters.html#strong_dark_unadjust"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.adjusters.strong_dark_unadjust" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that reverses a strong brightening filter to a dark image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>adjusted_image</strong> (<em>ndarray</em>) – The original image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The image with the adjustment applied.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.adjusters.weak_dark_adjust">
+<code class="sig-prename descclassname">shapevolve.adjusters.</code><code class="sig-name descname">weak_dark_adjust</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">original_image</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/adjusters.html#weak_dark_adjust"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.adjusters.weak_dark_adjust" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that applies a weak brightening filter to a dark image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>original_image</strong> (<em>ndarray</em>) – The original image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The image with the adjustment applied.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.adjusters.weak_dark_unadjust">
+<code class="sig-prename descclassname">shapevolve.adjusters.</code><code class="sig-name descname">weak_dark_unadjust</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">adjusted_image</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/adjusters.html#weak_dark_unadjust"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.adjusters.weak_dark_unadjust" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that reverses a strong brightening filter to a dark image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>adjusted_image</strong> (<em>ndarray</em>) – The original image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The image with the adjustment applied.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-shapevolve.callbacks">
+<span id="shapevolve-callbacks-module"></span><h2>shapevolve.callbacks module<a class="headerlink" href="#module-shapevolve.callbacks" title="Permalink to this headline">¶</a></h2>
+<p>Callbacks that can be given to the Evolver class, to be run when a successful change is applied to the genome.</p>
+<dl class="py class">
+<dt id="shapevolve.callbacks.CSVLogger">
+<em class="property">class </em><code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">CSVLogger</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">csv_filepath</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#CSVLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.CSVLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that defines callbacks which record statistics into a CSV file.</p>
+<dl class="py method">
+<dt id="shapevolve.callbacks.CSVLogger.callback">
+<code class="sig-name descname">callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#CSVLogger.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.CSVLogger.callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>A callback that stores offspring, generation, loop index, and error into the class’s CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offspring</strong> (<em>int</em>) – The total number of offspring already processed.</p></li>
+<li><p><strong>changes</strong> (<em>int</em>) – The total number of changes already applied to the genome.</p></li>
+<li><p><strong>loop_index</strong> (<em>int</em>) – The total number of loops already performed.</p></li>
+<li><p><strong>num_mutation_type_switches</strong> (<em>int</em>) – The total number of switches between simple and complex mutations so far.</p></li>
+<li><p><strong>error</strong> (<em>float</em>) – The error of the current genome compared to the base image.</p></li>
+<li><p><strong>complex_mutation</strong> (<em>bool</em>) – Whether complex mutations are being applied or not.</p></li>
+<li><p><strong>best_image</strong> (<em>ndarray</em>) – The best image so far.</p></li>
+<li><p><strong>genome</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – The genome for the best image so far.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="shapevolve.callbacks.GenomeSaver">
+<em class="property">class </em><code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">GenomeSaver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">genome_root</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#GenomeSaver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.GenomeSaver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that defines a callback where genomes are saved to files.</p>
+<dl class="py method">
+<dt id="shapevolve.callbacks.GenomeSaver.callback">
+<code class="sig-name descname">callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#GenomeSaver.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.GenomeSaver.callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>A callback that saves genomes to a filepath.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offspring</strong> (<em>int</em>) – The total number of offspring already processed.</p></li>
+<li><p><strong>changes</strong> (<em>int</em>) – The total number of changes already applied to the genome.</p></li>
+<li><p><strong>loop_index</strong> (<em>int</em>) – The total number of loops already performed.</p></li>
+<li><p><strong>num_mutation_type_switches</strong> (<em>int</em>) – The total number of switches between simple and complex mutations so far.</p></li>
+<li><p><strong>error</strong> (<em>float</em>) – The error of the current genome compared to the base image.</p></li>
+<li><p><strong>complex_mutation</strong> (<em>bool</em>) – Whether complex mutations are being applied or not.</p></li>
+<li><p><strong>best_image</strong> (<em>ndarray</em>) – The best image so far.</p></li>
+<li><p><strong>genome</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – The genome for the best image so far.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="shapevolve.callbacks.HighQualityImageSaver">
+<em class="property">class </em><code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">HighQualityImageSaver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image_root</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#HighQualityImageSaver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.HighQualityImageSaver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#shapevolve.callbacks.ImageSaver" title="shapevolve.callbacks.ImageSaver"><code class="xref py py-class docutils literal notranslate"><span class="pre">shapevolve.callbacks.ImageSaver</span></code></a></p>
+<p>A subclass of ImageSaver that scales images to the original resolution before saving them.</p>
+<dl class="py method">
+<dt id="shapevolve.callbacks.HighQualityImageSaver.callback">
+<code class="sig-name descname">callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#HighQualityImageSaver.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.HighQualityImageSaver.callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>A callback that scales an image before providing it to the equivalent method in ImageSaver.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offspring</strong> (<em>int</em>) – The total number of offspring already processed.</p></li>
+<li><p><strong>changes</strong> (<em>int</em>) – The total number of changes already applied to the genome.</p></li>
+<li><p><strong>loop_index</strong> (<em>int</em>) – The total number of loops already performed.</p></li>
+<li><p><strong>num_mutation_type_switches</strong> (<em>int</em>) – The total number of switches between simple and complex mutations so far.</p></li>
+<li><p><strong>error</strong> (<em>float</em>) – The error of the current genome compared to the base image.</p></li>
+<li><p><strong>complex_mutation</strong> (<em>bool</em>) – Whether complex mutations are being applied or not.</p></li>
+<li><p><strong>best_image</strong> (<em>ndarray</em>) – The best image so far.</p></li>
+<li><p><strong>genome</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – The genome for the best image so far.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="shapevolve.callbacks.ImageSaver">
+<em class="property">class </em><code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">ImageSaver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image_root</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#ImageSaver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.ImageSaver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that defines a callback where images built during evolution are saved.</p>
+<dl class="py method">
+<dt id="shapevolve.callbacks.ImageSaver.callback">
+<code class="sig-name descname">callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#ImageSaver.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.ImageSaver.callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>A callback that saves the best image so far into a png file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offspring</strong> (<em>int</em>) – The total number of offspring already processed.</p></li>
+<li><p><strong>changes</strong> (<em>int</em>) – The total number of changes already applied to the genome.</p></li>
+<li><p><strong>loop_index</strong> (<em>int</em>) – The total number of loops already performed.</p></li>
+<li><p><strong>num_mutation_type_switches</strong> (<em>int</em>) – The total number of switches between simple and complex mutations so far.</p></li>
+<li><p><strong>error</strong> (<em>float</em>) – The error of the current genome compared to the base image.</p></li>
+<li><p><strong>complex_mutation</strong> (<em>bool</em>) – Whether complex mutations are being applied or not.</p></li>
+<li><p><strong>best_image</strong> (<em>ndarray</em>) – The best image so far.</p></li>
+<li><p><strong>genome</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – The genome for the best image so far.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="shapevolve.callbacks.QuietCSVLogger">
+<em class="property">class </em><code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">QuietCSVLogger</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">csv_filepath</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#QuietCSVLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.QuietCSVLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#shapevolve.callbacks.CSVLogger" title="shapevolve.callbacks.CSVLogger"><code class="xref py py-class docutils literal notranslate"><span class="pre">shapevolve.callbacks.CSVLogger</span></code></a></p>
+<p>A subclass of CSVLogger that only logs every 50 generations.</p>
+<dl class="py method">
+<dt id="shapevolve.callbacks.QuietCSVLogger.callback">
+<code class="sig-name descname">callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#QuietCSVLogger.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.QuietCSVLogger.callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the equivalent callback in CSVLogger every 50 generations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offspring</strong> (<em>int</em>) – The total number of offspring already processed.</p></li>
+<li><p><strong>changes</strong> (<em>int</em>) – The total number of changes already applied to the genome.</p></li>
+<li><p><strong>loop_index</strong> (<em>int</em>) – The total number of loops already performed.</p></li>
+<li><p><strong>num_mutation_type_switches</strong> (<em>int</em>) – The total number of switches between simple and complex mutations so far.</p></li>
+<li><p><strong>error</strong> (<em>float</em>) – The error of the current genome compared to the base image.</p></li>
+<li><p><strong>complex_mutation</strong> (<em>bool</em>) – Whether complex mutations are being applied or not.</p></li>
+<li><p><strong>best_image</strong> (<em>ndarray</em>) – The best image so far.</p></li>
+<li><p><strong>genome</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – The genome for the best image so far.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="shapevolve.callbacks.QuietGenomeSaver">
+<em class="property">class </em><code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">QuietGenomeSaver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">genome_root</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#QuietGenomeSaver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.QuietGenomeSaver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#shapevolve.callbacks.GenomeSaver" title="shapevolve.callbacks.GenomeSaver"><code class="xref py py-class docutils literal notranslate"><span class="pre">shapevolve.callbacks.GenomeSaver</span></code></a></p>
+<p>A subclass of GenomeSaver that only saves every 50 generations.</p>
+<dl class="py method">
+<dt id="shapevolve.callbacks.QuietGenomeSaver.callback">
+<code class="sig-name descname">callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#QuietGenomeSaver.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.QuietGenomeSaver.callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the equivalent callback in GenomeSaver every 50 generations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offspring</strong> (<em>int</em>) – The total number of offspring already processed.</p></li>
+<li><p><strong>changes</strong> (<em>int</em>) – The total number of changes already applied to the genome.</p></li>
+<li><p><strong>loop_index</strong> (<em>int</em>) – The total number of loops already performed.</p></li>
+<li><p><strong>num_mutation_type_switches</strong> (<em>int</em>) – The total number of switches between simple and complex mutations so far.</p></li>
+<li><p><strong>error</strong> (<em>float</em>) – The error of the current genome compared to the base image.</p></li>
+<li><p><strong>complex_mutation</strong> (<em>bool</em>) – Whether complex mutations are being applied or not.</p></li>
+<li><p><strong>best_image</strong> (<em>ndarray</em>) – The best image so far.</p></li>
+<li><p><strong>genome</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – The genome for the best image so far.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="shapevolve.callbacks.QuietHighQualityImageSaver">
+<em class="property">class </em><code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">QuietHighQualityImageSaver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image_root</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#QuietHighQualityImageSaver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.QuietHighQualityImageSaver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#shapevolve.callbacks.HighQualityImageSaver" title="shapevolve.callbacks.HighQualityImageSaver"><code class="xref py py-class docutils literal notranslate"><span class="pre">shapevolve.callbacks.HighQualityImageSaver</span></code></a></p>
+<p>A subclass of HighQualityImageSaver that only saves images every 50 generations.</p>
+<dl class="py method">
+<dt id="shapevolve.callbacks.QuietHighQualityImageSaver.callback">
+<code class="sig-name descname">callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#QuietHighQualityImageSaver.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.QuietHighQualityImageSaver.callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the callback from HighQualityImageSaver every 50 generations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offspring</strong> (<em>int</em>) – The total number of offspring already processed.</p></li>
+<li><p><strong>changes</strong> (<em>int</em>) – The total number of changes already applied to the genome.</p></li>
+<li><p><strong>loop_index</strong> (<em>int</em>) – The total number of loops already performed.</p></li>
+<li><p><strong>num_mutation_type_switches</strong> (<em>int</em>) – The total number of switches between simple and complex mutations so far.</p></li>
+<li><p><strong>error</strong> (<em>float</em>) – The error of the current genome compared to the base image.</p></li>
+<li><p><strong>complex_mutation</strong> (<em>bool</em>) – Whether complex mutations are being applied or not.</p></li>
+<li><p><strong>best_image</strong> (<em>ndarray</em>) – The best image so far.</p></li>
+<li><p><strong>genome</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – The genome for the best image so far.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="shapevolve.callbacks.QuietImageSaver">
+<em class="property">class </em><code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">QuietImageSaver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image_root</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#QuietImageSaver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.QuietImageSaver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#shapevolve.callbacks.ImageSaver" title="shapevolve.callbacks.ImageSaver"><code class="xref py py-class docutils literal notranslate"><span class="pre">shapevolve.callbacks.ImageSaver</span></code></a></p>
+<p>A subclass of ImageSaver that only saves images every 50 generations.</p>
+<dl class="py method">
+<dt id="shapevolve.callbacks.QuietImageSaver.callback">
+<code class="sig-name descname">callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#QuietImageSaver.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.QuietImageSaver.callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the equivalent method in ImageSaver every 50 generations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offspring</strong> (<em>int</em>) – The total number of offspring already processed.</p></li>
+<li><p><strong>changes</strong> (<em>int</em>) – The total number of changes already applied to the genome.</p></li>
+<li><p><strong>loop_index</strong> (<em>int</em>) – The total number of loops already performed.</p></li>
+<li><p><strong>num_mutation_type_switches</strong> (<em>int</em>) – The total number of switches between simple and complex mutations so far.</p></li>
+<li><p><strong>error</strong> (<em>float</em>) – The error of the current genome compared to the base image.</p></li>
+<li><p><strong>complex_mutation</strong> (<em>bool</em>) – Whether complex mutations are being applied or not.</p></li>
+<li><p><strong>best_image</strong> (<em>ndarray</em>) – The best image so far.</p></li>
+<li><p><strong>genome</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – The genome for the best image so far.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.callbacks.default_callback">
+<code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">default_callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#default_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.default_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default callback that the Evolver class uses. Currently visual_callback.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offspring</strong> (<em>int</em>) – The total number of offspring already processed.</p></li>
+<li><p><strong>changes</strong> (<em>int</em>) – The total number of changes already applied to the genome.</p></li>
+<li><p><strong>loop_index</strong> (<em>int</em>) – The total number of loops already performed.</p></li>
+<li><p><strong>num_mutation_type_switches</strong> (<em>int</em>) – The total number of switches between simple and complex mutations so far.</p></li>
+<li><p><strong>error</strong> (<em>float</em>) – The error of the current genome compared to the base image.</p></li>
+<li><p><strong>complex_mutation</strong> (<em>bool</em>) – Whether complex mutations are being applied or not.</p></li>
+<li><p><strong>best_image</strong> (<em>ndarray</em>) – The best image so far.</p></li>
+<li><p><strong>genome</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – The genome for the best image so far.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.callbacks.quiet_verbose_callback">
+<code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">quiet_verbose_callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#quiet_verbose_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.quiet_verbose_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>The same thing as verbose_callback, but this only runs every 50 generations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offspring</strong> (<em>int</em>) – The total number of offspring already processed.</p></li>
+<li><p><strong>changes</strong> (<em>int</em>) – The total number of changes already applied to the genome.</p></li>
+<li><p><strong>loop_index</strong> (<em>int</em>) – The total number of loops already performed.</p></li>
+<li><p><strong>num_mutation_type_switches</strong> (<em>int</em>) – The total number of switches between simple and complex mutations so far.</p></li>
+<li><p><strong>error</strong> (<em>float</em>) – The error of the current genome compared to the base image.</p></li>
+<li><p><strong>complex_mutation</strong> (<em>bool</em>) – Whether complex mutations are being applied or not.</p></li>
+<li><p><strong>best_image</strong> (<em>ndarray</em>) – The best image so far.</p></li>
+<li><p><strong>genome</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – The genome for the best image so far.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.callbacks.quiet_visual_callback">
+<code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">quiet_visual_callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#quiet_visual_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.quiet_visual_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>The same thing as visual_callback, but this only runs every 50 generations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offspring</strong> (<em>int</em>) – The total number of offspring already processed.</p></li>
+<li><p><strong>changes</strong> (<em>int</em>) – The total number of changes already applied to the genome.</p></li>
+<li><p><strong>loop_index</strong> (<em>int</em>) – The total number of loops already performed.</p></li>
+<li><p><strong>num_mutation_type_switches</strong> (<em>int</em>) – The total number of switches between simple and complex mutations so far.</p></li>
+<li><p><strong>error</strong> (<em>float</em>) – The error of the current genome compared to the base image.</p></li>
+<li><p><strong>complex_mutation</strong> (<em>bool</em>) – Whether complex mutations are being applied or not.</p></li>
+<li><p><strong>best_image</strong> (<em>ndarray</em>) – The best image so far.</p></li>
+<li><p><strong>genome</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – The genome for the best image so far.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.callbacks.verbose_callback">
+<code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">verbose_callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#verbose_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.verbose_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>A callback that prints the status of the evolution into standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offspring</strong> (<em>int</em>) – The total number of offspring already processed.</p></li>
+<li><p><strong>changes</strong> (<em>int</em>) – The total number of changes already applied to the genome.</p></li>
+<li><p><strong>loop_index</strong> (<em>int</em>) – The total number of loops already performed.</p></li>
+<li><p><strong>num_mutation_type_switches</strong> (<em>int</em>) – The total number of switches between simple and complex mutations so far.</p></li>
+<li><p><strong>error</strong> (<em>float</em>) – The error of the current genome compared to the base image.</p></li>
+<li><p><strong>complex_mutation</strong> (<em>bool</em>) – Whether complex mutations are being applied or not.</p></li>
+<li><p><strong>best_image</strong> (<em>ndarray</em>) – The best image so far.</p></li>
+<li><p><strong>genome</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – The genome for the best image so far.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.callbacks.visual_callback">
+<code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">visual_callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#visual_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.visual_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple callback that uses matplotlib to provide a live update of the image on the screen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offspring</strong> (<em>int</em>) – The total number of offspring already processed.</p></li>
+<li><p><strong>changes</strong> (<em>int</em>) – The total number of changes already applied to the genome.</p></li>
+<li><p><strong>loop_index</strong> (<em>int</em>) – The total number of loops already performed.</p></li>
+<li><p><strong>num_mutation_type_switches</strong> (<em>int</em>) – The total number of switches between simple and complex mutations so far.</p></li>
+<li><p><strong>error</strong> (<em>float</em>) – The error of the current genome compared to the base image.</p></li>
+<li><p><strong>complex_mutation</strong> (<em>bool</em>) – Whether complex mutations are being applied or not.</p></li>
+<li><p><strong>best_image</strong> (<em>ndarray</em>) – The best image so far.</p></li>
+<li><p><strong>genome</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – The genome for the best image so far.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-shapevolve.drawers">
+<span id="shapevolve-drawers-module"></span><h2>shapevolve.drawers module<a class="headerlink" href="#module-shapevolve.drawers" title="Permalink to this headline">¶</a></h2>
+<p>Defines functions that can be used to draw shapes on an image based on genetic information by the evolver class.</p>
+<dl class="py function">
+<dt id="shapevolve.drawers.add_circle">
+<code class="sig-prename descclassname">shapevolve.drawers.</code><code class="sig-name descname">add_circle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">gene</span></em>, <em class="sig-param"><span class="n">palette</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/drawers.html#add_circle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.drawers.add_circle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a circle to an image based on info from a gene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ndarray</em>) – The base image to draw the circle on.</p></li>
+<li><p><strong>gene</strong> (<a class="reference internal" href="#shapevolve.gene.Gene" title="shapevolve.gene.Gene"><em>Gene</em></a>) – The gene that specifies how to draw the circle.</p></li>
+<li><p><strong>palette</strong> (<em>List</em><em>[</em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – The color palette where colors are referenced from.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.drawers.add_square">
+<code class="sig-prename descclassname">shapevolve.drawers.</code><code class="sig-name descname">add_square</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">gene</span></em>, <em class="sig-param"><span class="n">palette</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/drawers.html#add_square"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.drawers.add_square" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a square to an image based on info from a gene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ndarray</em>) – The base image to draw the square on.</p></li>
+<li><p><strong>gene</strong> (<a class="reference internal" href="#shapevolve.gene.Gene" title="shapevolve.gene.Gene"><em>Gene</em></a>) – The gene that specifies how to draw the square.</p></li>
+<li><p><strong>palette</strong> (<em>List</em><em>[</em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – The color palette where colors are referenced from.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.drawers.draw_overlay">
+<code class="sig-prename descclassname">shapevolve.drawers.</code><code class="sig-name descname">draw_overlay</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">overlay</span></em>, <em class="sig-param"><span class="n">alpha</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/drawers.html#draw_overlay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.drawers.draw_overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws an overlay over an image at a specified alpha.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ndarray</em>) – The base image.</p></li>
+<li><p><strong>overlay</strong> (<em>ndarray</em>) – The overlay image.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – The opacity, from 0 to 1.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-shapevolve.error_metrics">
+<span id="shapevolve-error-metrics-module"></span><h2>shapevolve.error_metrics module<a class="headerlink" href="#module-shapevolve.error_metrics" title="Permalink to this headline">¶</a></h2>
+<p>Defines error metrics that can be used to evaluate similarity between two images.</p>
+<dl class="py function">
+<dt id="shapevolve.error_metrics.mean_squared_error">
+<code class="sig-prename descclassname">shapevolve.error_metrics.</code><code class="sig-name descname">mean_squared_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">source</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/error_metrics.html#mean_squared_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.error_metrics.mean_squared_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mean squared error between two images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ndarray</em>) – The constructed image.</p></li>
+<li><p><strong>source</strong> (<em>ndarray</em>) – The original image.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The mean squared error between the two images.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.error_metrics.structural_similarity_error">
+<code class="sig-prename descclassname">shapevolve.error_metrics.</code><code class="sig-name descname">structural_similarity_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">source</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/error_metrics.html#structural_similarity_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.error_metrics.structural_similarity_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the opposite of the structural similarity between two images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ndarray</em>) – The constructed image.</p></li>
+<li><p><strong>source</strong> (<em>ndarray</em>) – The original image.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The opposite of the structural similarity between the two images.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-shapevolve.evolver">
+<span id="shapevolve-evolver-module"></span><h2>shapevolve.evolver module<a class="headerlink" href="#module-shapevolve.evolver" title="Permalink to this headline">¶</a></h2>
+<p>A class that manages evolving a genome based on certain specifications.</p>
+<dl class="py class">
+<dt id="shapevolve.evolver.Evolver">
+<em class="property">class </em><code class="sig-prename descclassname">shapevolve.evolver.</code><code class="sig-name descname">Evolver</code><span class="sig-paren">(</span><em class="sig-param">base_image</em>, <em class="sig-param">saved_genome=None</em>, <em class="sig-param">num_shapes=1000</em>, <em class="sig-param">num_colors=256</em>, <em class="sig-param">target_resolution=250</em>, <em class="sig-param">adjusters=None</em>, <em class="sig-param">preprocesses=None</em>, <em class="sig-param">draw=&lt;function add_circle&gt;</em>, <em class="sig-param">calculate_error=&lt;function mean_squared_error&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/evolver.html#Evolver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.evolver.Evolver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that manages evolving a genome based on certain specifications.</p>
+<dl class="py method">
+<dt id="shapevolve.evolver.Evolver.evolve">
+<code class="sig-name descname">evolve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_generations</span><span class="o">=</span><span class="default_value">5000</span></em>, <em class="sig-param"><span class="n">callbacks</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">silent</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/evolver.html#Evolver.evolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.evolver.Evolver.evolve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evolves a genome, and returns it after evolution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_generations</strong> (<em>int</em>) – The number of generations to evolve to. Note: early stoppages are possible.</p></li>
+<li><p><strong>callbacks</strong> (<em>List</em><em>[</em><em>Callable</em><em>]</em>) – Callbacks that can be run when a new generation is evolved.</p></li>
+<li><p><strong>silent</strong> (<em>bool</em>) – Whether callbacks will be run at all.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Genome</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-shapevolve.gene">
+<span id="shapevolve-gene-module"></span><h2>shapevolve.gene module<a class="headerlink" href="#module-shapevolve.gene" title="Permalink to this headline">¶</a></h2>
+<p>A Gene class that defines the properties of a single shape on an image.</p>
+<dl class="py class">
+<dt id="shapevolve.gene.Gene">
+<em class="property">class </em><code class="sig-prename descclassname">shapevolve.gene.</code><code class="sig-name descname">Gene</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_radius</span></em>, <em class="sig-param"><span class="n">min_radius</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">num_colors</span></em>, <em class="sig-param"><span class="n">radius</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">center</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/gene.html#Gene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.gene.Gene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A Gene class that defines the properties of a single shape on an image.</p>
+<dl class="py method">
+<dt id="shapevolve.gene.Gene.clone">
+<code class="sig-name descname">clone</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/gene.html#Gene.clone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.gene.Gene.clone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clones itself.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shapevolve.gene.Gene.completely_randomize">
+<code class="sig-name descname">completely_randomize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">initialization</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/gene.html#Gene.completely_randomize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.gene.Gene.completely_randomize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Completely randomizes the properties of the gene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>initialization</strong> (<em>bool</em>) – Whether this is being called from the constructor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shapevolve.gene.Gene.get_scaled_version">
+<code class="sig-name descname">get_scaled_version</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ratio</span></em>, <em class="sig-param"><span class="n">fill_gaps</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/gene.html#Gene.get_scaled_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.gene.Gene.get_scaled_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a scaled version of the gene, according to some ratio (original dimension / scaled dimension)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ratio</strong> – (original dimension) / (scaled dimension)</p></li>
+<li><p><strong>fill_gaps</strong> – Whether the radii should be slightly expanded so gaps don’t form between shapes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The scaled gene.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#shapevolve.gene.Gene" title="shapevolve.gene.Gene">Gene</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shapevolve.gene.Gene.mutate">
+<code class="sig-name descname">mutate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/gene.html#Gene.mutate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.gene.Gene.mutate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mutates the gene randomly.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shapevolve.gene.Gene.randomize_alpha">
+<code class="sig-name descname">randomize_alpha</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/gene.html#Gene.randomize_alpha"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.gene.Gene.randomize_alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomizes the opacity of the shape.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shapevolve.gene.Gene.randomize_center">
+<code class="sig-name descname">randomize_center</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/gene.html#Gene.randomize_center"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.gene.Gene.randomize_center" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomizes the center of the shape.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shapevolve.gene.Gene.randomize_color">
+<code class="sig-name descname">randomize_color</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/gene.html#Gene.randomize_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.gene.Gene.randomize_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomizes the color of the shape.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shapevolve.gene.Gene.randomize_radius">
+<code class="sig-name descname">randomize_radius</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/gene.html#Gene.randomize_radius"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.gene.Gene.randomize_radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomizes the radius.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shapevolve.gene.Gene.revert">
+<code class="sig-name descname">revert</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/gene.html#Gene.revert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.gene.Gene.revert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reverts the gene’s properties to before it was last modified.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.gene.random">
+<code class="sig-prename descclassname">shapevolve.gene.</code><code class="sig-name descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; x in the interval [0, 1).<a class="headerlink" href="#shapevolve.gene.random" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-shapevolve.genome">
+<span id="shapevolve-genome-module"></span><h2>shapevolve.genome module<a class="headerlink" href="#module-shapevolve.genome" title="Permalink to this headline">¶</a></h2>
+<p>The Genome class represents a shape sequence and its various properties, from which an image can be built.</p>
+<dl class="py class">
+<dt id="shapevolve.genome.Genome">
+<em class="property">class </em><code class="sig-prename descclassname">shapevolve.genome.</code><code class="sig-name descname">Genome</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequence</span></em>, <em class="sig-param"><span class="n">ratio</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">background_color</span></em>, <em class="sig-param"><span class="n">adjusters</span></em>, <em class="sig-param"><span class="n">palette</span></em>, <em class="sig-param"><span class="n">draw</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/genome.html#Genome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.genome.Genome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class represents a shape sequence and its various properties, from which an image can be built.</p>
+<dl class="py method">
+<dt id="shapevolve.genome.Genome.render_image">
+<code class="sig-name descname">render_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">sequence</span></em>, <em class="sig-param"><span class="n">after_unadjustment</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/genome.html#Genome.render_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.genome.Genome.render_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders an image according to certain parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>height</strong> (<em>int</em>) – The height of the desired image.</p></li>
+<li><p><strong>width</strong> (<em>int</em>) – The width of the desired image.</p></li>
+<li><p><strong>sequence</strong> (<em>List</em><em>[</em><a class="reference internal" href="#shapevolve.gene.Gene" title="shapevolve.gene.Gene"><em>Gene</em></a><em>]</em>) – The gene sequence to draw on the image.</p></li>
+<li><p><strong>after_unadjustment</strong> (<em>bool</em>) – Whether the image has already been un-adjusted.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The rendered image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shapevolve.genome.Genome.render_raw_image">
+<code class="sig-name descname">render_raw_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">after_unadjustment</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/genome.html#Genome.render_raw_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.genome.Genome.render_raw_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders the image without any scaling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>after_unadjustment</strong> (<em>bool</em>) – Whether the image has already been un-adjusted.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The rendered image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shapevolve.genome.Genome.render_scaled_image">
+<code class="sig-name descname">render_scaled_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">after_unadjustment</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">fill_gaps</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/genome.html#Genome.render_scaled_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.genome.Genome.render_scaled_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders a scaled version of an image according to the genome’s ratio field.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>after_unadjustment</strong> (<em>bool</em>) – Whether the image has already been un-adjusted.</p></li>
+<li><p><strong>fill_gaps</strong> (<em>bool</em>) – Whether gaps should be filled in the scaled image.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The scaled image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shapevolve.genome.Genome.save_genome">
+<code class="sig-name descname">save_genome</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/genome.html#Genome.save_genome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.genome.Genome.save_genome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the genome to a file using pickle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The filename to save the genome to.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shapevolve.genome.Genome.scale_sequence">
+<code class="sig-name descname">scale_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fill_gaps</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/genome.html#Genome.scale_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.genome.Genome.scale_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a gene sequence with each gene scaled by the genome’s ratio field.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fill_gaps</strong> (<em>bool</em>) – Whether the gene’s radius should be adjusted to fill new gaps in the scaled image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The new Gene sequence.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#shapevolve.gene.Gene" title="shapevolve.gene.Gene">Gene</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt id="shapevolve.genome.MismatchedGenomeError">
+<em class="property">exception </em><code class="sig-prename descclassname">shapevolve.genome.</code><code class="sig-name descname">MismatchedGenomeError</code><a class="reference internal" href="_modules/shapevolve/genome.html#MismatchedGenomeError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.genome.MismatchedGenomeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>An error that occurs when two genomes do not share the same properties with one another.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.genome.is_compatible">
+<code class="sig-prename descclassname">shapevolve.genome.</code><code class="sig-name descname">is_compatible</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">genome1</span></em>, <em class="sig-param"><span class="n">genome2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/genome.html#is_compatible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.genome.is_compatible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether two genomes could describe the same base image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>genome1</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – Genome 1, to be compared.</p></li>
+<li><p><strong>genome2</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – Genome 2, to be compared.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Whether they are matched.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>MismatchedGenomeError: If the genomes do not match.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.genome.load_genome">
+<code class="sig-prename descclassname">shapevolve.genome.</code><code class="sig-name descname">load_genome</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/genome.html#load_genome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.genome.load_genome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a pickled Genome file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The filename of the genome to be loaded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The loaded genome.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome">Genome</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-shapevolve.main">
+<span id="shapevolve-main-module"></span><h2>shapevolve.main module<a class="headerlink" href="#module-shapevolve.main" title="Permalink to this headline">¶</a></h2>
+<p>The main CLI interface for the standalone app.</p>
+<dl class="py function">
+<dt id="shapevolve.main.imwrite">
+<code class="sig-prename descclassname">shapevolve.main.</code><code class="sig-name descname">imwrite</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">img</em><span class="optional">[</span>, <em class="sig-param">params</em><span class="optional">]</span><span class="sig-paren">)</span> &#x2192; retval<a class="headerlink" href="#shapevolve.main.imwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>.   &#64;brief Saves an image to a specified file.
+.   
+.   The function imwrite saves the image to the specified file. The image format is chosen based on the
+.   filename extension (see cv::imread for the list of extensions). In general, only 8-bit
+.   single-channel or 3-channel (with ‘BGR’ channel order) images
+.   can be saved using this function, with these exceptions:
+.   
+.   - 16-bit unsigned (CV_16U) images can be saved in the case of PNG, JPEG 2000, and TIFF formats
+.   - 32-bit float (CV_32F) images can be saved in PFM, TIFF, OpenEXR, and Radiance HDR formats;
+.     3-channel (CV_32FC3) TIFF images will be saved using the LogLuv high dynamic range encoding
+.     (4 bytes per pixel)
+.   - PNG images with an alpha channel can be saved using this function. To do this, create
+.   8-bit (or 16-bit) 4-channel image BGRA, where the alpha channel goes last. Fully transparent pixels
+.   should have alpha set to 0, fully opaque pixels should have alpha set to 255/65535 (see the code sample below).
+.   
+.   If the format, depth or channel order is different, use
+.   Mat::convertTo and cv::cvtColor to convert it before saving. Or, use the universal FileStorage I/O
+.   functions to save the image to XML or YAML format.
+.   
+.   The sample below shows how to create a BGRA image and save it to a PNG file. It also demonstrates how to set custom
+.   compression parameters:
+.   &#64;include snippets/imgcodecs_imwrite.cpp
+.   &#64;param filename Name of the file.
+.   &#64;param img Image to be saved.
+.   &#64;param params Format-specific parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, … .) see cv::ImwriteFlags</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.main.main">
+<code class="sig-prename descclassname">shapevolve.main.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/main.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.main.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the application.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-shapevolve.mutations">
+<span id="shapevolve-mutations-module"></span><h2>shapevolve.mutations module<a class="headerlink" href="#module-shapevolve.mutations" title="Permalink to this headline">¶</a></h2>
+<p>Defines mutations.</p>
+<dl class="py function">
+<dt id="shapevolve.mutations.complex_mutation">
+<code class="sig-prename descclassname">shapevolve.mutations.</code><code class="sig-name descname">complex_mutation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ancestor_image</span></em>, <em class="sig-param"><span class="n">base_image</span></em>, <em class="sig-param"><span class="n">sequence</span></em>, <em class="sig-param"><span class="n">num_shapes</span></em>, <em class="sig-param"><span class="n">calculate_error</span></em>, <em class="sig-param"><span class="n">palette</span></em>, <em class="sig-param"><span class="n">draw</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/mutations.html#complex_mutation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.mutations.complex_mutation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the effects of a complex mutation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ancestor_image</strong> (<em>ndarray</em>) – An image with the solid background color only.</p></li>
+<li><p><strong>base_image</strong> (<em>ndarray</em>) – The original image for comparison.</p></li>
+<li><p><strong>sequence</strong> (<em>List</em><em>[</em><a class="reference internal" href="#shapevolve.gene.Gene" title="shapevolve.gene.Gene"><em>Gene</em></a><em>]</em>) – The existing gene sequence.</p></li>
+<li><p><strong>num_shapes</strong> (<em>int</em>) – The number of shapes to draw.</p></li>
+<li><p><strong>calculate_error</strong> (<em>Callable</em>) – The error metric method.</p></li>
+<li><p><strong>palette</strong> (<em>List</em><em>[</em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – The color palette to use.</p></li>
+<li><p><strong>draw</strong> (<em>Callable</em>) – The method to draw the shape according to the gene.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The error, the mutated gene, the new image, the index of the mutated gene, whether mutated gene was placed on top.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[float, <a class="reference internal" href="#shapevolve.gene.Gene" title="shapevolve.gene.Gene">Gene</a>, ndarray, int, bool]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.mutations.random">
+<code class="sig-prename descclassname">shapevolve.mutations.</code><code class="sig-name descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; x in the interval [0, 1).<a class="headerlink" href="#shapevolve.mutations.random" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.mutations.simple_mutation">
+<code class="sig-prename descclassname">shapevolve.mutations.</code><code class="sig-name descname">simple_mutation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">base_image</span></em>, <em class="sig-param"><span class="n">sequence</span></em>, <em class="sig-param"><span class="n">calculate_error</span></em>, <em class="sig-param"><span class="n">palette</span></em>, <em class="sig-param"><span class="n">draw</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/mutations.html#simple_mutation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.mutations.simple_mutation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the effects of a simple mutation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ndarray</em>) – The image to draw the gene on.</p></li>
+<li><p><strong>base_image</strong> (<em>ndarray</em>) – The original image to compare to.</p></li>
+<li><p><strong>sequence</strong> (<em>List</em><em>[</em><a class="reference internal" href="#shapevolve.gene.Gene" title="shapevolve.gene.Gene"><em>Gene</em></a><em>]</em>) – The gene sequence.</p></li>
+<li><p><strong>calculate_error</strong> (<em>Callable</em>) – The error metric method.</p></li>
+<li><p><strong>palette</strong> (<em>List</em><em>[</em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – The color palette to use.</p></li>
+<li><p><strong>draw</strong> (<em>Callable</em>) – The method to draw the shape according to the gene.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The error, the mutated gene, and the new image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[float, <a class="reference internal" href="#shapevolve.gene.Gene" title="shapevolve.gene.Gene">Gene</a>, ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-shapevolve.preprocessors">
+<span id="shapevolve-preprocessors-module"></span><h2>shapevolve.preprocessors module<a class="headerlink" href="#module-shapevolve.preprocessors" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="shapevolve.preprocessors.brighten_preprocess">
+<code class="sig-prename descclassname">shapevolve.preprocessors.</code><code class="sig-name descname">brighten_preprocess</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/preprocessors.html#brighten_preprocess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.preprocessors.brighten_preprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increases brightness of an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>Image</em>) – The image to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The processed image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.preprocessors.contrast_preprocess">
+<code class="sig-prename descclassname">shapevolve.preprocessors.</code><code class="sig-name descname">contrast_preprocess</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/preprocessors.html#contrast_preprocess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.preprocessors.contrast_preprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increases contrast of an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>Image</em>) – The image to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The processed image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.preprocessors.debrighten_preprocess">
+<code class="sig-prename descclassname">shapevolve.preprocessors.</code><code class="sig-name descname">debrighten_preprocess</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/preprocessors.html#debrighten_preprocess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.preprocessors.debrighten_preprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decreases brightness of an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>Image</em>) – The image to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The processed image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.preprocessors.decontrast_preprocess">
+<code class="sig-prename descclassname">shapevolve.preprocessors.</code><code class="sig-name descname">decontrast_preprocess</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/preprocessors.html#decontrast_preprocess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.preprocessors.decontrast_preprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decreases contrast of an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>Image</em>) – The image to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The processed image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.preprocessors.desaturate_preprocess">
+<code class="sig-prename descclassname">shapevolve.preprocessors.</code><code class="sig-name descname">desaturate_preprocess</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/preprocessors.html#desaturate_preprocess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.preprocessors.desaturate_preprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Desaturates an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>Image</em>) – The image to desaturate.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The desaturated image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.preprocessors.saturate_preprocess">
+<code class="sig-prename descclassname">shapevolve.preprocessors.</code><code class="sig-name descname">saturate_preprocess</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/preprocessors.html#saturate_preprocess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.preprocessors.saturate_preprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saturates an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>Image</em>) – The image to saturate.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The saturated image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.preprocessors.smooth_preprocess">
+<code class="sig-prename descclassname">shapevolve.preprocessors.</code><code class="sig-name descname">smooth_preprocess</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/preprocessors.html#smooth_preprocess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.preprocessors.smooth_preprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Smooths an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>Image</em>) – The image to smooth.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The smoothed image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-shapevolve.samples">
+<span id="shapevolve-samples-module"></span><h2>shapevolve.samples module<a class="headerlink" href="#module-shapevolve.samples" title="Permalink to this headline">¶</a></h2>
+<p>Some sample methods to show the functionality of the module.</p>
+<dl class="py function">
+<dt id="shapevolve.samples.adjustment_sample">
+<code class="sig-prename descclassname">shapevolve.samples.</code><code class="sig-name descname">adjustment_sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/samples.html#adjustment_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.samples.adjustment_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>A sample function that illustrates how to use adjusters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em>) – The absolute filepath of an input image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The evolved genome.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome">Genome</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.samples.callback_sample">
+<code class="sig-prename descclassname">shapevolve.samples.</code><code class="sig-name descname">callback_sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath_source</span></em>, <em class="sig-param"><span class="n">filepath_csv</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/samples.html#callback_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.samples.callback_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>A sample function that illustrates how to add callbacks to the evolve method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath_source</strong> (<em>str</em>) – The absolute filepath of an input image.</p></li>
+<li><p><strong>filepath_csv</strong> (<em>str</em>) – The filepath to save CSV statistics to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The evolved genome.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome">Genome</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.samples.draw_shape_sample">
+<code class="sig-prename descclassname">shapevolve.samples.</code><code class="sig-name descname">draw_shape_sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/samples.html#draw_shape_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.samples.draw_shape_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>A sample function that illustrates how to use custom shape drawing methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em>) – The absolute filepath of an input image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The evolved genome.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome">Genome</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.samples.error_metric_sample">
+<code class="sig-prename descclassname">shapevolve.samples.</code><code class="sig-name descname">error_metric_sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/samples.html#error_metric_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.samples.error_metric_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>A sample function that illustrates how to use custom error metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em>) – The absolute filepath of an input image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The evolved genome.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome">Genome</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.samples.load_genome_sample">
+<code class="sig-prename descclassname">shapevolve.samples.</code><code class="sig-name descname">load_genome_sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath_source</span></em>, <em class="sig-param"><span class="n">filepath_genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/samples.html#load_genome_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.samples.load_genome_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>A sample function that illustrates how to load previously saved genomes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath_source</strong> (<em>str</em>) – The absolute filepath of an input image.</p></li>
+<li><p><strong>filepath_genome</strong> (<em>str</em>) – The filepath to load the pre-evolved genome.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The evolved genome.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome">Genome</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.samples.preprocess_sample">
+<code class="sig-prename descclassname">shapevolve.samples.</code><code class="sig-name descname">preprocess_sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/samples.html#preprocess_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.samples.preprocess_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>A sample function that illustrates how to use preprocesses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em>) – The absolute filepath of an input image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The evolved genome.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome">Genome</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.samples.save_genome_sample">
+<code class="sig-prename descclassname">shapevolve.samples.</code><code class="sig-name descname">save_genome_sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath_source</span></em>, <em class="sig-param"><span class="n">filepath_to_save_to</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/samples.html#save_genome_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.samples.save_genome_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>A sample function that illustrates how to save genomes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath_source</strong> (<em>str</em>) – The absolute filepath of an input image.</p></li>
+<li><p><strong>filepath_to_save_to</strong> (<em>str</em>) – The filepath to save the genome.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The evolved genome.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome">Genome</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.samples.save_image_sample">
+<code class="sig-prename descclassname">shapevolve.samples.</code><code class="sig-name descname">save_image_sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath_source</span></em>, <em class="sig-param"><span class="n">filepath_to_save_to</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/samples.html#save_image_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.samples.save_image_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>A sample function that illustrates how to save images from genomes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath_source</strong> (<em>str</em>) – The absolute filepath of an input image.</p></li>
+<li><p><strong>filepath_to_save_to</strong> (<em>str</em>) – The filepath to save the evolved image to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The evolved genome.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome">Genome</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.samples.standard_sample">
+<code class="sig-prename descclassname">shapevolve.samples.</code><code class="sig-name descname">standard_sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/samples.html#standard_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.samples.standard_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>A standard sample function that illustrates how to use the module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em>) – The absolute filepath of an input image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The evolved genome.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome">Genome</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-shapevolve.utils">
+<span id="shapevolve-utils-module"></span><h2>shapevolve.utils module<a class="headerlink" href="#module-shapevolve.utils" title="Permalink to this headline">¶</a></h2>
+<p>Utility methods.</p>
+<dl class="py class">
+<dt id="shapevolve.utils.ColorThiefFromImage">
+<em class="property">class </em><code class="sig-prename descclassname">shapevolve.utils.</code><code class="sig-name descname">ColorThiefFromImage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/utils.html#ColorThiefFromImage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.utils.ColorThiefFromImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">colorthief.ColorThief</span></code></p>
+<p>This class extends ColorThief to support providing images as-is instead of filenames.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.utils.adjust">
+<code class="sig-prename descclassname">shapevolve.utils.</code><code class="sig-name descname">adjust</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">original_image</span></em>, <em class="sig-param"><span class="n">adjusters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/utils.html#adjust"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.utils.adjust" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjusts an image based on adjusters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>original_image</strong> (<em>ndarray</em>) – The original image before adjustments.</p></li>
+<li><p><strong>adjusters</strong> (<em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Callable</em><em>]</em><em>]</em>) – Adjusters to apply.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The adjusted image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.utils.convert_RGB_to_BGR">
+<code class="sig-prename descclassname">shapevolve.utils.</code><code class="sig-name descname">convert_RGB_to_BGR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/utils.html#convert_RGB_to_BGR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.utils.convert_RGB_to_BGR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a RGB color to a BGR color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>color</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>]</em>) – The RGB color.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The corresponding BGR color.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[int, int, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.utils.get_image">
+<code class="sig-prename descclassname">shapevolve.utils.</code><code class="sig-name descname">get_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/utils.html#get_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.utils.get_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>A shortcut to get an image from a filepath.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – The filepath of the image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The image object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.utils.get_image_path">
+<code class="sig-prename descclassname">shapevolve.utils.</code><code class="sig-name descname">get_image_path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">directory</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/utils.html#get_image_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.utils.get_image_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the path of an image based on a directory in the script’s folder and a name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the image.</p></li>
+<li><p><strong>directory</strong> (<em>str</em>) – The directory name, in the same folder as this script.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The filepath.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.utils.get_rescale_ratio">
+<code class="sig-prename descclassname">shapevolve.utils.</code><code class="sig-name descname">get_rescale_ratio</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">target</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/utils.html#get_rescale_ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.utils.get_rescale_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the required ratio to rescale an image to a target resolution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>Image</em>) – An image to resize.</p></li>
+<li><p><strong>target</strong> (<em>int</em>) – The target resolution to resize to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The min of the ratio between the target resolution and the image’s smallest dimension, and 1.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.utils.show_image">
+<code class="sig-prename descclassname">shapevolve.utils.</code><code class="sig-name descname">show_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">generation</span></em>, <em class="sig-param"><span class="n">display</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">adjusters</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/utils.html#show_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.utils.show_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses matplotlib to show an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ndarray</em>) – The image to show.</p></li>
+<li><p><strong>generation</strong> (<em>int</em>) – What generation the image corresponds to.</p></li>
+<li><p><strong>display</strong> (<em>AxesImage</em>) – The window the image should display on.</p></li>
+<li><p><strong>adjusters</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Callable</em><em>]</em>) – Any adjusters that should be reversed for the image.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The window where the image was displayed.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>AxesImage</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shapevolve.utils.unadjust">
+<code class="sig-prename descclassname">shapevolve.utils.</code><code class="sig-name descname">unadjust</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">adjusted_image</span></em>, <em class="sig-param"><span class="n">adjusters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/utils.html#unadjust"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.utils.unadjust" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reverses an adjustment on an image based on adjusters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adjusted_image</strong> (<em>ndarray</em>) – The image after adjustments.</p></li>
+<li><p><strong>adjusters</strong> (<em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Callable</em><em>]</em><em>]</em>) – Adjusters to reverse.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The unadjusted image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-shapevolve">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-shapevolve" title="Permalink to this headline">¶</a></h2>
+<p>Shapevolve: A genetic algorithm to recreate artworks using simple shapes, with Python 3.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Shapevolve</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">shapevolve package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-shapevolve.adjusters">shapevolve.adjusters module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-shapevolve.callbacks">shapevolve.callbacks module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-shapevolve.drawers">shapevolve.drawers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-shapevolve.error_metrics">shapevolve.error_metrics module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-shapevolve.evolver">shapevolve.evolver module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-shapevolve.gene">shapevolve.gene module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-shapevolve.genome">shapevolve.genome module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-shapevolve.main">shapevolve.main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-shapevolve.mutations">shapevolve.mutations module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-shapevolve.preprocessors">shapevolve.preprocessors module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-shapevolve.samples">shapevolve.samples module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-shapevolve.utils">shapevolve.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-shapevolve">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Sample images:</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Evan Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/shapevolve.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

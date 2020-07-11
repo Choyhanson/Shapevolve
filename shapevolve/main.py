@@ -5,9 +5,9 @@ from argparse import ArgumentParser
 from cv2 import imwrite
 from matplotlib.pyplot import show
 
-from evolver import Evolver
-from genome import load_genome
-from utils import get_image
+from shapevolve.evolver import Evolver
+from shapevolve.genome import load_genome
+from shapevolve.utils import get_image
 
 
 def main():

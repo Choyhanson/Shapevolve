@@ -6,16 +6,16 @@ import cv2  # opencv2 for image management
 import numpy as np  # for linear algebra help
 from PIL import Image  # for initial image palette and bgcolor generation with help of colorthief
 
-from callbacks import default_callback
-from drawers import add_circle
+from shapevolve.callbacks import default_callback
+from shapevolve.drawers import add_circle
 # noinspection PyUnresolvedReferences
-from error_metrics import mean_squared_error
-from gene import Gene
-from genome import Genome, is_compatible
-from mutations import simple_mutation, complex_mutation
+from shapevolve.error_metrics import mean_squared_error
+from shapevolve.gene import Gene
+from shapevolve.genome import Genome, is_compatible
+from shapevolve.mutations import simple_mutation, complex_mutation
 # noinspection PyUnresolvedReferences
-from preprocessors import smooth_preprocess
-from utils import get_rescale_ratio, convert_RGB_to_BGR, adjust, ColorThiefFromImage
+from shapevolve.preprocessors import smooth_preprocess
+from shapevolve.utils import get_rescale_ratio, convert_RGB_to_BGR, adjust, ColorThiefFromImage
 
 
 class Evolver:

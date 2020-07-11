@@ -4,7 +4,7 @@ import pickle
 
 import numpy as np
 
-from utils import unadjust
+from shapevolve.utils import unadjust
 
 
 class MismatchedGenomeError(Exception):

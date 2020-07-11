@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shapevolve.utils &#8212; Shapevolve v1.0-alpha documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for shapevolve.utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Utility methods.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">colorthief</span> <span class="kn">import</span> <span class="n">ColorThief</span>
+<span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">draw</span><span class="p">,</span> <span class="n">pause</span><span class="p">,</span> <span class="n">imshow</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">axis</span>
+
+
+<div class="viewcode-block" id="convert_RGB_to_BGR"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.utils.convert_RGB_to_BGR">[docs]</a><span class="k">def</span> <span class="nf">convert_RGB_to_BGR</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a RGB color to a BGR color.</span>
+
+<span class="sd">    :param color: The RGB color.</span>
+<span class="sd">    :type color: Tuple[int, int, int]</span>
+<span class="sd">    :return: The corresponding BGR color.</span>
+<span class="sd">    :rtype: Tuple[int, int, int]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="show_image"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.utils.show_image">[docs]</a><span class="k">def</span> <span class="nf">show_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">generation</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">adjusters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Uses matplotlib to show an image.</span>
+
+<span class="sd">    :param image: The image to show.</span>
+<span class="sd">    :param generation: What generation the image corresponds to.</span>
+<span class="sd">    :param display: The window the image should display on.</span>
+<span class="sd">    :param adjusters: Any adjusters that should be reversed for the image.</span>
+<span class="sd">    :type image: ndarray</span>
+<span class="sd">    :type generation: int</span>
+<span class="sd">    :type display: AxesImage</span>
+<span class="sd">    :type adjusters: Dict[str, Callable]</span>
+<span class="sd">    :return: The window where the image was displayed.</span>
+<span class="sd">    :rtype: AxesImage</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">adjusters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">adjusters</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+    <span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generation </span><span class="si">{</span><span class="n">generation</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+    <span class="n">restored_image</span> <span class="o">=</span> <span class="n">unadjust</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">adjusters</span><span class="p">)</span>
+    <span class="n">restored_image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">restored_image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">display</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">display</span> <span class="o">=</span> <span class="n">imshow</span><span class="p">(</span><span class="n">restored_image</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">display</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">restored_image</span><span class="p">)</span>
+
+    <span class="n">draw</span><span class="p">()</span>
+    <span class="n">pause</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">display</span></div>
+
+
+<div class="viewcode-block" id="get_rescale_ratio"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.utils.get_rescale_ratio">[docs]</a><span class="k">def</span> <span class="nf">get_rescale_ratio</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets the required ratio to rescale an image to a target resolution</span>
+
+<span class="sd">    :param image: An image to resize.</span>
+<span class="sd">    :param target: The target resolution to resize to.</span>
+<span class="sd">    :type image: Image</span>
+<span class="sd">    :type target: int</span>
+<span class="sd">    :return: The min of the ratio between the target resolution and the image&#39;s smallest dimension, and 1.</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">width</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">height</span>
+
+    <span class="k">if</span> <span class="n">width</span> <span class="o">&lt;=</span> <span class="n">target</span> <span class="ow">or</span> <span class="n">height</span> <span class="o">&lt;=</span> <span class="n">target</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="n">ratio</span> <span class="o">=</span> <span class="n">target</span> <span class="o">/</span> <span class="nb">min</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ratio</span></div>
+
+
+<div class="viewcode-block" id="adjust"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.utils.adjust">[docs]</a><span class="k">def</span> <span class="nf">adjust</span><span class="p">(</span><span class="n">original_image</span><span class="p">,</span> <span class="n">adjusters</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adjusts an image based on adjusters.</span>
+
+<span class="sd">    :param original_image: The original image before adjustments.</span>
+<span class="sd">    :param adjusters: Adjusters to apply.</span>
+<span class="sd">    :type original_image: ndarray</span>
+<span class="sd">    :type adjusters: List[Dict[str, Callable]]</span>
+<span class="sd">    :return: The adjusted image.</span>
+<span class="sd">    :rtype: ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">adjusters</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">original_image</span>
+
+    <span class="n">adjustments</span> <span class="o">=</span> <span class="p">[</span><span class="n">adjuster</span><span class="p">[</span><span class="s1">&#39;adjust&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">adjuster</span> <span class="ow">in</span> <span class="n">adjusters</span><span class="p">]</span>
+    <span class="n">adjusted_image</span> <span class="o">=</span> <span class="n">original_image</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">adjustment</span> <span class="ow">in</span> <span class="n">adjustments</span><span class="p">:</span>
+        <span class="n">adjusted_image</span> <span class="o">=</span> <span class="n">adjustment</span><span class="p">(</span><span class="n">adjusted_image</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">adjusted_image</span></div>
+
+
+<div class="viewcode-block" id="unadjust"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.utils.unadjust">[docs]</a><span class="k">def</span> <span class="nf">unadjust</span><span class="p">(</span><span class="n">adjusted_image</span><span class="p">,</span> <span class="n">adjusters</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Reverses an adjustment on an image based on adjusters.</span>
+
+<span class="sd">    :param adjusted_image: The image after adjustments.</span>
+<span class="sd">    :param adjusters: Adjusters to reverse.</span>
+<span class="sd">    :type adjusted_image: ndarray</span>
+<span class="sd">    :type adjusters: List[Dict[str, Callable]]</span>
+<span class="sd">    :return: The unadjusted image.</span>
+<span class="sd">    :rtype: ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">adjusters</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">adjusted_image</span>
+
+    <span class="n">unadjustments</span> <span class="o">=</span> <span class="nb">reversed</span><span class="p">([</span><span class="n">adjuster</span><span class="p">[</span><span class="s1">&#39;unadjust&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">adjuster</span> <span class="ow">in</span> <span class="n">adjusters</span><span class="p">])</span>
+    <span class="n">original_image</span> <span class="o">=</span> <span class="n">adjusted_image</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">unadjustment</span> <span class="ow">in</span> <span class="n">unadjustments</span><span class="p">:</span>
+        <span class="n">original_image</span> <span class="o">=</span> <span class="n">unadjustment</span><span class="p">(</span><span class="n">original_image</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">original_image</span></div>
+
+
+<div class="viewcode-block" id="get_image_path"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.utils.get_image_path">[docs]</a><span class="k">def</span> <span class="nf">get_image_path</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets the path of an image based on a directory in the script&#39;s folder and a name.</span>
+
+<span class="sd">    :param name: The name of the image.</span>
+<span class="sd">    :param directory: The directory name, in the same folder as this script.</span>
+<span class="sd">    :type name: str</span>
+<span class="sd">    :type directory: str</span>
+<span class="sd">    :return: The filepath.</span>
+<span class="sd">    :rtype: string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">name</span></div>
+
+
+<div class="viewcode-block" id="ColorThiefFromImage"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.utils.ColorThiefFromImage">[docs]</a><span class="k">class</span> <span class="nc">ColorThiefFromImage</span><span class="p">(</span><span class="n">ColorThief</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class extends ColorThief to support providing images as-is instead of filenames.&quot;&quot;&quot;</span>
+
+    <span class="c1"># noinspection PyMissingConstructor</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Builds the ColorThief object with an image field.</span>
+
+<span class="sd">        :param image: The image to build colors from.</span>
+<span class="sd">        :type image: Image</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">image</span></div>
+
+
+<div class="viewcode-block" id="get_image"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.utils.get_image">[docs]</a><span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A shortcut to get an image from a filepath.</span>
+
+<span class="sd">    :param path: The filepath of the image.</span>
+<span class="sd">    :type path: str</span>
+<span class="sd">    :return: The image object.</span>
+<span class="sd">    :rtype: Image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Shapevolve</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../shapevolve.html">shapevolve package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Evan Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

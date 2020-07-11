@@ -1,13 +1,13 @@
-# Shapevolve
+# User Guide
 A genetic algorithm to recreate artworks using simple shapes, with Python 3.
 
 Evan Zheng, July 2020.
 
 Initially designed on Google Colab with Jupyter Notebooks. Module built with assistance from PyCharm. Work-in-progress.
 
-## How to use:
+### How to use:
 
-### CLI interface:
+#### CLI interface:
 This has only been tested with Python 3.8.
 
 Change the directory to where `__main__.py` is located. Then, run the following command:
@@ -16,7 +16,7 @@ Change the directory to where `__main__.py` is located. Then, run the following 
 
 You can also run `help` for more information on command line options.
 
-### Module:
+#### Module:
 Here is some sample code to demonstrate how to use the module.
 
 ```
@@ -34,9 +34,9 @@ genome.save_genome("path/to/save_checkpoint.pkl") # Saves the genome for later u
 
 More sample code can be found in `samples.py`, [here.](https://github.com/richmondvan/Shapevolve/blob/master/circlevolve/samples.py)
 
-## Libraries and APIs used:
+### Libraries and APIs used:
 
-### Third-party libraries used:
+#### Third-party libraries used:
 - [NumPy](https://numpy.org/) for numerical computation with matrices
 - [ColorThief](https://github.com/fengsp/color-thief-py) for grabbing color palettes from images
 - [Scikit-Image](https://scikit-image.org/) for computing image simularity
@@ -44,12 +44,12 @@ More sample code can be found in `samples.py`, [here.](https://github.com/richmo
 - [Pillow](https://github.com/python-pillow/Pillow) for image preprocessing
 - [Matplotlib](https://matplotlib.org/) for image display
 
-### Built-in libraries used:
+#### Built-in libraries used:
 - [Pickle](https://docs.python.org/3/library/pickle.html) for checkpoint saves and loads.
 - [Argparse](https://docs.python.org/3/library/argparse.html) for the CLI interface.
 
-## License:
+### License:
 See [LICENSE](https://github.com/richmondvan/Shapevolve/blob/master/LICENSE) file.
 
-## Thanks:
+### Thanks:
 Ahmed Khalf's [Circle-Evolution](https://github.com/ahmedkhalf/Circle-Evolution) module provided a great deal of inspiration.

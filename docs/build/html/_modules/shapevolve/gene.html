@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shapevolve.gene &#8212; Shapevolve v1.0-alpha documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for shapevolve.gene</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;A Gene class that defines the properties of a single shape on an image.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">random</span><span class="p">,</span> <span class="n">randint</span>
+
+
+<div class="viewcode-block" id="Gene"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.gene.Gene">[docs]</a><span class="k">class</span> <span class="nc">Gene</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A Gene class that defines the properties of a single shape on an image.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_radius</span><span class="p">,</span> <span class="n">min_radius</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">num_colors</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructs a gene and its initial properties.</span>
+
+<span class="sd">        :param max_radius: The maximum possible radius the gene can have.</span>
+<span class="sd">        :param min_radius: The minimum possible radius the gene can have.</span>
+<span class="sd">        :param height: The height of the image that the gene is drawing on.</span>
+<span class="sd">        :param width: The width of the image that the gene is drawing on.</span>
+<span class="sd">        :param num_colors: The number of colours the gene can have.</span>
+<span class="sd">        :param radius: The current radius of the gene.</span>
+<span class="sd">        :param center: The coordinates of the center of the gene&#39;s shape.</span>
+<span class="sd">        :param color: The current color of the gene, as an index of an external color palette list.</span>
+<span class="sd">        :param alpha: The current opacity of the gene, between 0 and 1.</span>
+<span class="sd">        :type max_radius: int</span>
+<span class="sd">        :type min_radius: int</span>
+<span class="sd">        :type height: int</span>
+<span class="sd">        :type width: int</span>
+<span class="sd">        :type num_colors: int</span>
+<span class="sd">        :type radius: int</span>
+<span class="sd">        :type center: Tuple[int, int]</span>
+<span class="sd">        :type color: int</span>
+<span class="sd">        :type alpha: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_radius</span> <span class="o">=</span> <span class="n">max_radius</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_radius</span> <span class="o">=</span> <span class="n">min_radius</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_colors</span> <span class="o">=</span> <span class="n">num_colors</span>
+        <span class="k">if</span> <span class="n">radius</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">completely_randomize</span><span class="p">(</span><span class="n">initialization</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Randomize values at initialization.</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">center</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="p">[</span><span class="n">radius</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Gene.revert"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.gene.Gene.revert">[docs]</a>    <span class="k">def</span> <span class="nf">revert</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reverts the gene&#39;s properties to before it was last modified.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Gene.completely_randomize"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.gene.Gene.completely_randomize">[docs]</a>    <span class="k">def</span> <span class="nf">completely_randomize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initialization</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Completely randomizes the properties of the gene.</span>
+
+<span class="sd">        :param initialization: Whether this is being called from the constructor.</span>
+<span class="sd">        :type initialization: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">randomize_radius</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">randomize_center</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">randomize_color</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">randomize_alpha</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">initialization</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Gene.mutate"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.gene.Gene.mutate">[docs]</a>    <span class="k">def</span> <span class="nf">mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Mutates the gene randomly.&quot;&quot;&quot;</span>
+
+        <span class="c1"># backup</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">]</span>
+
+        <span class="c1"># Chances of altering the radius or alpha</span>
+        <span class="n">radius_alter</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.293</span>
+        <span class="n">alpha_alter</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.293</span>
+
+        <span class="c1"># Whether an alteration still needs to be made</span>
+        <span class="n">no_alter</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">radius_alter</span> <span class="ow">or</span> <span class="n">alpha_alter</span><span class="p">)</span>
+
+        <span class="c1"># Mutate.</span>
+        <span class="k">if</span> <span class="n">radius_alter</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">randomize_radius</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">alpha_alter</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">randomize_alpha</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">no_alter</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">completely_randomize</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Gene.randomize_radius"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.gene.Gene.randomize_radius">[docs]</a>    <span class="k">def</span> <span class="nf">randomize_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Randomizes the radius.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_radius</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Gene.randomize_center"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.gene.Gene.randomize_center">[docs]</a>    <span class="k">def</span> <span class="nf">randomize_center</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Randomizes the center of the shape.&quot;&quot;&quot;</span>
+
+        <span class="c1"># The center can be a little bit outside the width and height of the image.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span> <span class="o">-</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">/</span> <span class="mi">5</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">/</span> <span class="mi">5</span><span class="p">)),</span>
+                       <span class="n">randint</span><span class="p">(</span><span class="mi">0</span> <span class="o">-</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">/</span> <span class="mi">5</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">+</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">/</span> <span class="mi">5</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="Gene.randomize_color"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.gene.Gene.randomize_color">[docs]</a>    <span class="k">def</span> <span class="nf">randomize_color</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Randomizes the color of the shape.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_colors</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># The num_colors is off by one because of ColorThief.</span></div>
+
+<div class="viewcode-block" id="Gene.randomize_alpha"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.gene.Gene.randomize_alpha">[docs]</a>    <span class="k">def</span> <span class="nf">randomize_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Randomizes the opacity of the shape.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mf">0.45</span> <span class="o">+</span> <span class="mf">0.05</span>  <span class="c1"># between 0.05 and 0.5</span></div>
+
+<div class="viewcode-block" id="Gene.get_scaled_version"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.gene.Gene.get_scaled_version">[docs]</a>    <span class="k">def</span> <span class="nf">get_scaled_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ratio</span><span class="p">,</span> <span class="n">fill_gaps</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a scaled version of the gene, according to some ratio (original dimension / scaled dimension)</span>
+
+<span class="sd">        :param ratio: (original dimension) / (scaled dimension)</span>
+<span class="sd">        :param fill_gaps: Whether the radii should be slightly expanded so gaps don&#39;t form between shapes.</span>
+<span class="sd">        :return: The scaled gene.</span>
+<span class="sd">        :rtype: Gene</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">radius_padding</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">fill_gaps</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">new_radius</span> <span class="o">=</span> <span class="nb">round</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">+</span> <span class="n">radius_padding</span><span class="p">)</span> <span class="o">/</span> <span class="n">ratio</span><span class="p">)</span>
+        <span class="n">new_center</span> <span class="o">=</span> <span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">ratio</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">ratio</span><span class="p">))</span>
+        <span class="n">new_height</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="n">ratio</span><span class="p">)</span>
+        <span class="n">new_width</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="n">ratio</span><span class="p">)</span>
+        <span class="n">new_max_radius</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_radius</span> <span class="o">/</span> <span class="n">ratio</span><span class="p">)</span>
+        <span class="n">new_min_radius</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_radius</span> <span class="o">/</span> <span class="n">ratio</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Gene</span><span class="p">(</span><span class="n">new_max_radius</span><span class="p">,</span> <span class="n">new_min_radius</span><span class="p">,</span> <span class="n">new_height</span><span class="p">,</span> <span class="n">new_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_colors</span><span class="p">,</span> <span class="n">new_radius</span><span class="p">,</span> <span class="n">new_center</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Gene.clone"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.gene.Gene.clone">[docs]</a>    <span class="k">def</span> <span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clones itself.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Gene</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_colors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Shapevolve</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../shapevolve.html">shapevolve package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Evan Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
