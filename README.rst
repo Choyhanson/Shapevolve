@@ -1,10 +1,6 @@
 Shapevolve
 ==========
 
-`View on Github. <https://github.com/richmondvan/Shapevolve>`_
-
-`See the website and API reference. <https://richmondvan.github.io/shapevolve/>`_
-
 A genetic algorithm to recreate artworks using simple shapes, with
 Python 3.
 
@@ -19,19 +15,19 @@ Sample images:
 
 The Starry Night:
 
-.. image:: ./_images/starrynight.png_result.png
+.. image:: ./images/starrynight.png_result.png
 
 Mona Lisa:
 
-.. image:: ./_images/monalisa.jpg_result.png
+.. image:: ./images/monalisa.jpg_result.png
 
 Girl with a Pearl Earring:
 
-.. image:: ./_images/pearlearring.jpg_result.png
+.. image:: ./images/pearlearring.jpg_result.png
 
 The Great Wave off Kanagawa:
 
-.. image:: ./_images/greatwave.jpg_result.png
+.. image:: ./images/greatwave.jpg_result.png
 
 
 How to use:

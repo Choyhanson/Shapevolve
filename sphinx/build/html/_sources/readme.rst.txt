@@ -2,6 +2,7 @@ Shapevolve
 ==========
 
 `View on Github. <https://github.com/richmondvan/Shapevolve>`_
+
 `See the website and API reference. <richmondvan.github.io/shapevolve/>`_
 
 A genetic algorithm to recreate artworks using simple shapes, with
