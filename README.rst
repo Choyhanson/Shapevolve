@@ -7,7 +7,7 @@ Python 3.
 Evan Zheng, July 2020.
 
 Initially designed on Google Colab with Jupyter Notebooks. Module built
-with assistance from PyCharm. Work-in-progress.
+with assistance from PyCharm.
 
 
 Sample images:
@@ -95,7 +95,7 @@ Thanks:
 Ahmed Khalf’s `Circle-Evolution`_ module provided a great deal of
 inspiration.
 
-.. _here.: https://github.com/richmondvan/Shapevolve/blob/master/circlevolve/samples.py
+.. _here.: https://github.com/richmondvan/Shapevolve/blob/master/Shapevolve/samples.py
 .. _NumPy: https://numpy.org/
 .. _ColorThief: https://github.com/fengsp/color-thief-py
 .. _Scikit-Image: https://scikit-image.org/
