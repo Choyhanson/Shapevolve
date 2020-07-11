@@ -95,7 +95,7 @@ Thanks:
 Ahmed Khalf’s `Circle-Evolution`_ module provided a great deal of
 inspiration.
 
-.. _here.: https://github.com/richmondvan/Shapevolve/blob/master/Shapevolve/samples.py
+.. _here.: https://github.com/richmondvan/Shapevolve/blob/master/shapevolve/samples.py
 .. _NumPy: https://numpy.org/
 .. _ColorThief: https://github.com/fengsp/color-thief-py
 .. _Scikit-Image: https://scikit-image.org/
