@@ -12,7 +12,7 @@ with assistance from PyCharm.
 .. image:: ./images/starrynightgif.gif
 
 Sample Results:
---------------
+---------------
 
 The Starry Night:
 
