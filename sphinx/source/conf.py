@@ -58,6 +58,8 @@ html_theme = 'alabaster'
 html_static_path = ['_static']
 
 html_theme_options = {
+    'logo': 'logo.png',
+    'logo_name': 'true',
     'github_user': 'richmondvan',
     'github_repo': 'Shapevolve',
 }
