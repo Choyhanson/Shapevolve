@@ -19,19 +19,19 @@ Sample images:
 
 The Starry Night:
 
-.. image:: ./docs/source/images/starrynight.png_result.png
+.. image:: ./_images/starrynight.png_result.png
 
 Mona Lisa:
 
-.. image:: ./docs/source/images/monalisa.jpg_result.png
+.. image:: ./_images/monalisa.jpg_result.png
 
 Girl with a Pearl Earring:
 
-.. image:: ./docs/source/images/pearlearring.jpg_result.png
+.. image:: ./_images/pearlearring.jpg_result.png
 
 The Great Wave off Kanagawa:
 
-.. image:: ./docs/source/images/greatwave.jpg_result.png
+.. image:: ./_images/greatwave.jpg_result.png
 
 
 How to use:
