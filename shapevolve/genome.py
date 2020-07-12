@@ -100,7 +100,7 @@ class Genome:
 
         for gene in sequence:
             self.draw(image, gene, self.palette)
-        if after_unadjustment:
+        if not after_unadjustment:
             image = unadjust(image, self.adjusters)
         return image
 
