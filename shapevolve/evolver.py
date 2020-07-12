@@ -125,6 +125,12 @@ class Evolver:
         :type silent: bool
         :return: Genome
         """
+
+        if num_generations < 1:
+            raise ValueError("Too few generations, num_generations must be in range [1, 100000].")
+        elif num_generations > 100000:
+            raise ValueError("Too many generations, num_generations must be in range [1, 100000].")
+
         if silent:
             callbacks = []
         elif callbacks is None:
