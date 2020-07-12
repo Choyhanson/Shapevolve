@@ -69,6 +69,8 @@ Here is some sample code to demonstrate how to use the module.
 
 More sample code can be found in ``samples.py``, `here.`_
 
+Here is a detailed `API reference.`_
+
 Libraries and APIs used:
 ------------------------
 
@@ -102,6 +104,7 @@ inspiration.
 
 .. _releases: https://github.com/richmondvan/Shapevolve/releases
 .. _here.: https://github.com/richmondvan/Shapevolve/blob/master/shapevolve/samples.py
+.. _API reference.: https://richmondvan.github.io/Shapevolve/shapevolve.html
 .. _NumPy: https://numpy.org/
 .. _ColorThief: https://github.com/fengsp/color-thief-py
 .. _Scikit-Image: https://scikit-image.org/
