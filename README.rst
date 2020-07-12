@@ -30,24 +30,27 @@ The Great Wave off Kanagawa:
 
 .. image:: ./_images/greatwave.jpg_result.png
 
+How to install and use:
+-----------------------
+Standalone executable: (Windows)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-How to use:
------------
+Head over to `releases`_ and download the latest executable, ``shapevolve.exe``.
 
-CLI interface:
-~~~~~~~~~~~~~~
+In the command line:
 
-This has only been tested with Python 3.8.
+Change the directory using ``cd`` to where the executable is located.
 
-Change the directory to where ``__main__.py`` is located. Then, run the
-following command:
+Then, run ``shapevolve.exe path/to/image_file.png`` to run the program with an image as input.
 
-``python __main__.py path/to/image_file.png``
-
-You can also run ``python __main__.py -h`` for more information on command line options.
+You can also run ``shapevolve.exe -h`` to view additional options.
 
 Module:
 ~~~~~~~
+
+Install shapevolve from PyPI using the following command:
+
+``pip install shapevolve``
 
 Here is some sample code to demonstrate how to use the module.
 
@@ -66,6 +69,8 @@ Here is some sample code to demonstrate how to use the module.
 
 More sample code can be found in ``samples.py``, `here.`_
 
+Here is a detailed `API reference.`_
+
 Libraries and APIs used:
 ------------------------
 
@@ -78,6 +83,7 @@ Third-party libraries used:
 -  `OpenCV`_ for building images from circles
 -  `Pillow`_ for image preprocessing
 -  `Matplotlib`_ for image display
+-  `PyInstaller`_ for building an executable file.
 
 Built-in libraries used:
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -96,13 +102,16 @@ Thanks:
 Ahmed Khalf’s `Circle-Evolution`_ module provided a great deal of
 inspiration.
 
+.. _releases: https://github.com/richmondvan/Shapevolve/releases
 .. _here.: https://github.com/richmondvan/Shapevolve/blob/master/shapevolve/samples.py
+.. _API reference.: https://richmondvan.github.io/Shapevolve/shapevolve.html
 .. _NumPy: https://numpy.org/
 .. _ColorThief: https://github.com/fengsp/color-thief-py
 .. _Scikit-Image: https://scikit-image.org/
 .. _OpenCV: https://opencv.org/
 .. _Pillow: https://github.com/python-pillow/Pillow
 .. _Matplotlib: https://matplotlib.org/
+.. _PyInstaller: https://www.pyinstaller.org/
 .. _Pickle: https://docs.python.org/3/library/pickle.html
 .. _Argparse: https://docs.python.org/3/library/argparse.html
 .. _LICENSE: https://github.com/richmondvan/Shapevolve/blob/master/LICENSE

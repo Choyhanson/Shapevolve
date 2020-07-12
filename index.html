@@ -50,18 +50,20 @@ with assistance from PyCharm.</p>
 <p>The Great Wave off Kanagawa:</p>
 <img alt="_images/greatwave.jpg_result.png" src="_images/greatwave.jpg_result.png" />
 </div>
-<div class="section" id="how-to-use">
-<h2>How to use:<a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="cli-interface">
-<h3>CLI interface:<a class="headerlink" href="#cli-interface" title="Permalink to this headline">¶</a></h3>
-<p>This has only been tested with Python 3.8.</p>
-<p>Change the directory to where <code class="docutils literal notranslate"><span class="pre">__main__.py</span></code> is located. Then, run the
-following command:</p>
-<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">__main__.py</span> <span class="pre">path/to/image_file.png</span></code></p>
-<p>You can also run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">__main__.py</span> <span class="pre">-h</span></code> for more information on command line options.</p>
+<div class="section" id="how-to-install-and-use">
+<h2>How to install and use:<a class="headerlink" href="#how-to-install-and-use" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="standalone-executable-windows">
+<h3>Standalone executable: (Windows)<a class="headerlink" href="#standalone-executable-windows" title="Permalink to this headline">¶</a></h3>
+<p>Head over to <a class="reference external" href="https://github.com/richmondvan/Shapevolve/releases">releases</a> and download the latest executable, <code class="docutils literal notranslate"><span class="pre">shapevolve.exe</span></code>.</p>
+<p>In the command line:</p>
+<p>Change the directory using <code class="docutils literal notranslate"><span class="pre">cd</span></code> to where the executable is located.</p>
+<p>Then, run <code class="docutils literal notranslate"><span class="pre">shapevolve.exe</span> <span class="pre">path/to/image_file.png</span></code> to run the program with an image as input.</p>
+<p>You can also run <code class="docutils literal notranslate"><span class="pre">shapevolve.exe</span> <span class="pre">-h</span></code> to view additional options.</p>
 </div>
 <div class="section" id="module">
 <h3>Module:<a class="headerlink" href="#module" title="Permalink to this headline">¶</a></h3>
+<p>Install shapevolve from PyPI using the following command:</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">shapevolve</span></code></p>
 <p>Here is some sample code to demonstrate how to use the module.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">shapevolve.evolver</span> <span class="kn">import</span> <span class="n">Evolver</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
@@ -76,6 +78,7 @@ following command:</p>
 </pre></div>
 </div>
 <p>More sample code can be found in <code class="docutils literal notranslate"><span class="pre">samples.py</span></code>, <a class="reference external" href="https://github.com/richmondvan/Shapevolve/blob/master/shapevolve/samples.py">here.</a></p>
+<p>Here is a detailed <a class="reference external" href="https://richmondvan.github.io/Shapevolve/shapevolve.html">API reference.</a></p>
 </div>
 </div>
 <div class="section" id="libraries-and-apis-used">
@@ -89,6 +92,7 @@ following command:</p>
 <li><p><a class="reference external" href="https://opencv.org/">OpenCV</a> for building images from circles</p></li>
 <li><p><a class="reference external" href="https://github.com/python-pillow/Pillow">Pillow</a> for image preprocessing</p></li>
 <li><p><a class="reference external" href="https://matplotlib.org/">Matplotlib</a> for image display</p></li>
+<li><p><a class="reference external" href="https://www.pyinstaller.org/">PyInstaller</a> for building an executable file.</p></li>
 </ul>
 </div>
 <div class="section" id="built-in-libraries-used">
