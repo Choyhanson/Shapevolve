@@ -117,6 +117,15 @@
 <em class="property">class </em><code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">CSVLogger</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">csv_filepath</span></em>, <em class="sig-param"><span class="n">frequency</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#CSVLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.CSVLogger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class that defines callbacks which record statistics into a CSV file.</p>
+<p>A constructor for the class that stores a path to a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>csv_filepath</strong> (<em>str</em>) – The filepath of the CSV file that statistics will be written to.</p></li>
+<li><p><strong>frequency</strong> (<em>int</em>) – The frequency at which stats will be saved.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="shapevolve.callbacks.CSVLogger.callback">
 <code class="sig-name descname">callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#CSVLogger.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.CSVLogger.callback" title="Permalink to this definition">¶</a></dt>
@@ -144,6 +153,15 @@
 <em class="property">class </em><code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">GenomeSaver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">genome_root</span></em>, <em class="sig-param"><span class="n">frequency</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#GenomeSaver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.GenomeSaver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class that defines a callback where genomes are saved to files.</p>
+<p>Constructs a genome saver class that takes a given root file path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>genome_root</strong> (<em>str</em>) – The file path where genomes should be saved.</p></li>
+<li><p><strong>frequency</strong> (<em>int</em>) – The frequency at which files will be saved.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="shapevolve.callbacks.GenomeSaver.callback">
 <code class="sig-name descname">callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#GenomeSaver.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.GenomeSaver.callback" title="Permalink to this definition">¶</a></dt>
@@ -171,6 +189,15 @@
 <em class="property">class </em><code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">HighQualityImageSaver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image_root</span></em>, <em class="sig-param"><span class="n">frequency</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#HighQualityImageSaver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.HighQualityImageSaver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#shapevolve.callbacks.ImageSaver" title="shapevolve.callbacks.ImageSaver"><code class="xref py py-class docutils literal notranslate"><span class="pre">shapevolve.callbacks.ImageSaver</span></code></a></p>
 <p>A subclass of ImageSaver that scales images to the original resolution before saving them.</p>
+<p>A constructor for the class that defines a root filepath for saved images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_root</strong> (<em>str</em>) – The root filepath for saved images.</p></li>
+<li><p><strong>frequency</strong> (<em>int</em>) – The frequency at which files will be saved.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="shapevolve.callbacks.HighQualityImageSaver.callback">
 <code class="sig-name descname">callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#HighQualityImageSaver.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.HighQualityImageSaver.callback" title="Permalink to this definition">¶</a></dt>
@@ -198,6 +225,15 @@
 <em class="property">class </em><code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">ImageSaver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image_root</span></em>, <em class="sig-param"><span class="n">frequency</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#ImageSaver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.ImageSaver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class that defines a callback where images built during evolution are saved.</p>
+<p>A constructor for the class that defines a root filepath for saved images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_root</strong> (<em>str</em>) – The root filepath for saved images.</p></li>
+<li><p><strong>frequency</strong> (<em>int</em>) – The frequency at which files will be saved.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="shapevolve.callbacks.ImageSaver.callback">
 <code class="sig-name descname">callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#ImageSaver.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.ImageSaver.callback" title="Permalink to this definition">¶</a></dt>
@@ -225,6 +261,15 @@
 <em class="property">class </em><code class="sig-prename descclassname">shapevolve.callbacks.</code><code class="sig-name descname">MatplotImageSaver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image_root</span></em>, <em class="sig-param"><span class="n">frequency</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#MatplotImageSaver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.MatplotImageSaver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#shapevolve.callbacks.ImageSaver" title="shapevolve.callbacks.ImageSaver"><code class="xref py py-class docutils literal notranslate"><span class="pre">shapevolve.callbacks.ImageSaver</span></code></a></p>
 <p>A class that defines a callback where images shown by matplotlib during evolution are saved. Must be used with a variant of visual_callback in the same list.</p>
+<p>A constructor for the class that defines a root filepath for saved images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_root</strong> (<em>str</em>) – The root filepath for saved images.</p></li>
+<li><p><strong>frequency</strong> (<em>int</em>) – The frequency at which files will be saved.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="shapevolve.callbacks.MatplotImageSaver.callback">
 <code class="sig-name descname">callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offspring</span></em>, <em class="sig-param"><span class="n">changes</span></em>, <em class="sig-param"><span class="n">loop_index</span></em>, <em class="sig-param"><span class="n">num_mutation_type_switches</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="n">complex_mutation</span></em>, <em class="sig-param"><span class="n">best_image</span></em>, <em class="sig-param"><span class="n">genome</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/callbacks.html#MatplotImageSaver.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.callbacks.MatplotImageSaver.callback" title="Permalink to this definition">¶</a></dt>
@@ -449,6 +494,22 @@
 <em class="property">class </em><code class="sig-prename descclassname">shapevolve.evolver.</code><code class="sig-name descname">Evolver</code><span class="sig-paren">(</span><em class="sig-param">base_image</em>, <em class="sig-param">saved_genome=None</em>, <em class="sig-param">num_shapes=1000</em>, <em class="sig-param">num_colors=256</em>, <em class="sig-param">target_resolution=250</em>, <em class="sig-param">adjusters=None</em>, <em class="sig-param">preprocesses=None</em>, <em class="sig-param">draw=&lt;function add_circle&gt;</em>, <em class="sig-param">calculate_error=&lt;function mean_squared_error&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/evolver.html#Evolver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.evolver.Evolver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class that manages evolving a genome based on certain specifications.</p>
+<p>A constructor that specifies base images, a saved genome, and settings for the evolution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_image</strong> (<em>Image</em>) – The source PIL image object that the evolution will be performed against.</p></li>
+<li><p><strong>saved_genome</strong> (<a class="reference internal" href="#shapevolve.genome.Genome" title="shapevolve.genome.Genome"><em>Genome</em></a>) – An optional saved genome. If unspecified, a genome will be randomly generated.</p></li>
+<li><p><strong>num_shapes</strong> (<em>int</em>) – The number of shapes to be used in the genome construction.</p></li>
+<li><p><strong>num_colors</strong> (<em>int</em>) – The number of colors that should be used by the shapes.</p></li>
+<li><p><strong>target_resolution</strong> (<em>int</em>) – The resolution that images will be resized to during the evolution.</p></li>
+<li><p><strong>adjusters</strong> (<em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Callable</em><em>]</em><em>]</em>) – A list of reversible adjusters that can be applied during the evolution. See adjusters module.</p></li>
+<li><p><strong>preprocesses</strong> (<em>List</em><em>[</em><em>Callable</em><em>]</em>) – A list of preprocessors that will be applied to the image before the evolution. See preprocessors module.</p></li>
+<li><p><strong>draw</strong> (<em>Callable</em>) – The function used to draw shapes on the image. See drawers module.</p></li>
+<li><p><strong>calculate_error</strong> (<em>Callable</em>) – The function used to calculate errors between images. See error_metrics module.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="shapevolve.evolver.Evolver.evolve">
 <code class="sig-name descname">evolve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_generations</span><span class="o">=</span><span class="default_value">5000</span></em>, <em class="sig-param"><span class="n">callbacks</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">silent</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/evolver.html#Evolver.evolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.evolver.Evolver.evolve" title="Permalink to this definition">¶</a></dt>
@@ -478,6 +539,22 @@
 <em class="property">class </em><code class="sig-prename descclassname">shapevolve.gene.</code><code class="sig-name descname">Gene</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_radius</span></em>, <em class="sig-param"><span class="n">min_radius</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">num_colors</span></em>, <em class="sig-param"><span class="n">radius</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">center</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/gene.html#Gene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.gene.Gene" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A Gene class that defines the properties of a single shape on an image.</p>
+<p>Constructs a gene and its initial properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_radius</strong> (<em>int</em>) – The maximum possible radius the gene can have.</p></li>
+<li><p><strong>min_radius</strong> (<em>int</em>) – The minimum possible radius the gene can have.</p></li>
+<li><p><strong>height</strong> (<em>int</em>) – The height of the image that the gene is drawing on.</p></li>
+<li><p><strong>width</strong> (<em>int</em>) – The width of the image that the gene is drawing on.</p></li>
+<li><p><strong>num_colors</strong> (<em>int</em>) – The number of colours the gene can have.</p></li>
+<li><p><strong>radius</strong> (<em>int</em>) – The current radius of the gene.</p></li>
+<li><p><strong>center</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – The coordinates of the center of the gene’s shape.</p></li>
+<li><p><strong>color</strong> (<em>int</em>) – The current color of the gene, as an index of an external color palette list.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – The current opacity of the gene, between 0 and 1.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="shapevolve.gene.Gene.clone">
 <code class="sig-name descname">clone</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/gene.html#Gene.clone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.gene.Gene.clone" title="Permalink to this definition">¶</a></dt>
@@ -567,6 +644,21 @@
 <em class="property">class </em><code class="sig-prename descclassname">shapevolve.genome.</code><code class="sig-name descname">Genome</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequence</span></em>, <em class="sig-param"><span class="n">ratio</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">background_color</span></em>, <em class="sig-param"><span class="n">adjusters</span></em>, <em class="sig-param"><span class="n">palette</span></em>, <em class="sig-param"><span class="n">draw</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/genome.html#Genome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.genome.Genome" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This class represents a shape sequence and its various properties, from which an image can be built.</p>
+<p>Constructs a genome based on certain properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sequence</strong> (<em>List</em><em>[</em><a class="reference internal" href="#shapevolve.gene.Gene" title="shapevolve.gene.Gene"><em>Gene</em></a><em>]</em>) – A sequence of Gene objects that represent the shapes in the image.</p></li>
+<li><p><strong>ratio</strong> (<em>float</em>) – The ratio between the evolution image dimensions and the original image dimensions.</p></li>
+<li><p><strong>height</strong> (<em>int</em>) – The height of the image.</p></li>
+<li><p><strong>width</strong> (<em>int</em>) – The width of the image.</p></li>
+<li><p><strong>background_color</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>]</em>) – The background color of the image.</p></li>
+<li><p><strong>adjusters</strong> (<em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Callable</em><em>]</em><em>]</em>) – Reversible image adjusters that can be applied and unapplied to the image.</p></li>
+<li><p><strong>palette</strong> (<em>List</em><em>[</em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – A list of RGB color tuples that colors are referenced from.</p></li>
+<li><p><strong>draw</strong> (<em>Callable</em>) – A function that is used to draw an image according to a Gene object.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="shapevolve.genome.Genome.render_image">
 <code class="sig-name descname">render_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">sequence</span></em>, <em class="sig-param"><span class="n">after_unadjustment</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/genome.html#Genome.render_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.genome.Genome.render_image" title="Permalink to this definition">¶</a></dt>
@@ -1101,6 +1193,12 @@
 <em class="property">class </em><code class="sig-prename descclassname">shapevolve.utils.</code><code class="sig-name descname">ColorThiefFromImage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shapevolve/utils.html#ColorThiefFromImage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shapevolve.utils.ColorThiefFromImage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">colorthief.ColorThief</span></code></p>
 <p>This class extends ColorThief to support providing images as-is instead of filenames.</p>
+<p>Builds the ColorThief object with an image field.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>Image</em>) – The image to build colors from.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
