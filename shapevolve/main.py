@@ -13,7 +13,7 @@ from shapevolve import __version__
 
 def main():
     """Run the application."""
-    parser = ArgumentParser(description=f"Circlevolve CLI, {__version__}")
+    parser = ArgumentParser(description=f"Circlevolve CLI, version {__version__}")
     parser.add_argument("image", type=str, help="Path to base image for evolution")
     parser.add_argument("--saved-genome", default=None, type=str, help="Path to saved genome for continued evolution")
     parser.add_argument("--num-shapes", default=1000, type=int, help="Number of shapes to draw with")
