@@ -56,6 +56,19 @@ class Evolver:
         if preprocesses is None:
             preprocesses = [smooth_preprocess]
 
+        if num_shapes > 10000:
+            raise ValueError("Too many inputted shapes: num_shapes must be in range[10, 10000].")
+        if num_shapes < 10:
+            raise ValueError("Too few inputted shapes: num_shapes must be in range[10, 10000].")
+
+        if num_colors > 256:
+            raise ValueError("Too many inputted colors: num_colors must be in range [8, 256].")
+        if num_colors < 8:
+            raise ValueError("Too few inputted colors: num_colors must be in range [8, 256].")
+
+        if target_resolution < 100:
+            raise ValueError("Resolution too small: target_resolution must be >= 100.")
+
         self.draw = draw
         self.num_shapes = num_shapes
         self.num_colors = num_colors
