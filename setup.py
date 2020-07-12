@@ -1,11 +1,24 @@
 from distutils.core import setup
+from os import path
+
+
+with open(path.join(path.abspath(path.dirname(__file__)), 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
+with open('shapevolve/__init__.py') as f:
+    for line in f:
+        if line.startswith('__version__'):
+            _, _, version = line.replace('"', '').split()
+            break
 
 setup(
     name='shapevolve',  # How you named your package folder (MyLib)
     packages=['shapevolve'],  # Chose the same as "name"
-    version='v0.1',  # Start with a small number and increase it with every change you make
+    version=version,  # Start with a small number and increase it with every change you make
     license='MIT',  # Chose a license from here: https://help.github.com/articles/licensing-a-repository
     description='A genetic algorithm to recreate artworks using simple shapes, with Python 3.',
+    long_description=long_description,
+    long_description_content_type='text/x-rst',
     # Give a short description about your library
     author='Evan Zheng',  # Type in your name
     author_email='evan.ty.zheng@gmail.com',  # Type in your E-Mail
