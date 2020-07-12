@@ -9,6 +9,8 @@ Evan Zheng, July 2020.
 Initially designed on Google Colab with Jupyter Notebooks. Module built
 with assistance from PyCharm.
 
+View on `PyPI.`_
+
 .. image:: ./images/starrynightgif.gif
 
 Sample Results:
@@ -102,6 +104,7 @@ Thanks:
 Ahmed Khalf’s `Circle-Evolution`_ module provided a great deal of
 inspiration.
 
+.. _PyPI.: https://pypi.org/project/shapevolve/
 .. _releases: https://github.com/richmondvan/Shapevolve/releases
 .. _here.: https://github.com/richmondvan/Shapevolve/blob/master/shapevolve/samples.py
 .. _API reference.: https://richmondvan.github.io/Shapevolve/shapevolve.html

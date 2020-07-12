@@ -23,7 +23,7 @@ setup(
     author='Evan Zheng',  # Type in your name
     author_email='evan.ty.zheng@gmail.com',  # Type in your E-Mail
     url='https://richmondvan.github.io/Shapevolve/',  # Provide either the link to your github or to your website
-    download_url='https://github.com/richmondvan/Shapevolve/archive/0.1.1.tar.gz',  # I explain this later on
+    download_url=f'https://github.com/richmondvan/Shapevolve/archive/{version}.tar.gz',  # I explain this later on
     install_requires=[  # I get to this in a second
         'opencv-python',
         'matplotlib',
