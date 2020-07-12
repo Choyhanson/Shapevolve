@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>shapevolve.genome &#8212; Shapevolve v0.1.2-alpha documentation</title>
+    <title>shapevolve.genome &#8212; Shapevolve v0.1.3-alpha documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -134,7 +134,7 @@
 
         <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">after_unadjustment</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">after_unadjustment</span><span class="p">:</span>
             <span class="n">image</span> <span class="o">=</span> <span class="n">unadjust</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">adjusters</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">image</span></div>
 
