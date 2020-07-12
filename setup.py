@@ -2,7 +2,7 @@ from distutils.core import setup
 from os import path
 
 
-with open(path.join(path.abspath(path.dirname(__file__)), 'README.rst'), encoding='utf-8') as f:
+with open(path.join(path.abspath(path.dirname(__file__)), 'README_without_images.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 with open('shapevolve/__init__.py') as f:
