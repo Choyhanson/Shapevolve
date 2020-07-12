@@ -90,6 +90,19 @@
         <span class="k">if</span> <span class="n">preprocesses</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">preprocesses</span> <span class="o">=</span> <span class="p">[</span><span class="n">smooth_preprocess</span><span class="p">]</span>
 
+        <span class="k">if</span> <span class="n">num_shapes</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Too many inputted shapes: num_shapes must be in range[10, 10000].&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">num_shapes</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Too few inputted shapes: num_shapes must be in range[10, 10000].&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">num_colors</span> <span class="o">&gt;</span> <span class="mi">256</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Too many inputted colors: num_colors must be in range [8, 256].&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">num_colors</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Too few inputted colors: num_colors must be in range [8, 256].&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">target_resolution</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Resolution too small: target_resolution must be &gt;= 100.&quot;</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">draw</span> <span class="o">=</span> <span class="n">draw</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_shapes</span> <span class="o">=</span> <span class="n">num_shapes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_colors</span> <span class="o">=</span> <span class="n">num_colors</span>
@@ -314,7 +327,7 @@
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
+<p class="caption"><span class="caption-text">API Reference:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../shapevolve.html">shapevolve package</a></li>
 </ul>

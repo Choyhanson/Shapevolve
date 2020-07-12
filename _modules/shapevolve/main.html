@@ -42,13 +42,22 @@
 <span class="kn">from</span> <span class="nn">shapevolve.evolver</span> <span class="kn">import</span> <span class="n">Evolver</span>
 <span class="kn">from</span> <span class="nn">shapevolve.genome</span> <span class="kn">import</span> <span class="n">load_genome</span>
 <span class="kn">from</span> <span class="nn">shapevolve.utils</span> <span class="kn">import</span> <span class="n">get_image</span>
-<span class="kn">from</span> <span class="nn">shapevolve</span> <span class="kn">import</span> <span class="n">__version__</span>
+<span class="kn">from</span> <span class="nn">shapevolve</span> <span class="kn">import</span> <span class="n">__version__</span><span class="p">,</span> <span class="n">callbacks</span><span class="p">,</span> <span class="n">drawers</span><span class="p">,</span> <span class="n">error_metrics</span><span class="p">,</span> <span class="n">adjusters</span>
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../shapevolve.html#shapevolve.main.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Run the application.&quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Circlevolve CLI, version </span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to base image for evolution&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-square&quot;</span><span class="p">,</span>  <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;square&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Runs with squares instead of circles&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-debug&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Print statistics in console&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-ssim&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;ssim&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Use structural-similarity instead of mean-squared-error&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-dark&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;dark&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optimize the algorithm for darker images&quot;</span><span class="p">)</span>
+
+    <span class="n">group</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_mutually_exclusive_group</span><span class="p">()</span>
+    <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-silent&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;output&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_const&#39;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Disables viewing updates and statistics during evolution&quot;</span><span class="p">)</span>
+    <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-quiet&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;output&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_const&#39;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Updates more rarely during evolution&quot;</span><span class="p">)</span>
+
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--saved-genome&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to saved genome for continued evolution&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--num-shapes&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of shapes to draw with&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--num-generations&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of generations to train&quot;</span><span class="p">)</span>
@@ -62,8 +71,38 @@
     <span class="n">image_path</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">image</span> <span class="o">+</span> <span class="s2">&quot;_result.png&quot;</span>
     <span class="n">genome_path</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">image</span> <span class="o">+</span> <span class="s2">&quot;_genome.pkl&quot;</span>
 
-    <span class="n">evolver</span> <span class="o">=</span> <span class="n">Evolver</span><span class="p">(</span><span class="n">get_image</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">image</span><span class="p">),</span> <span class="n">saved_genome</span><span class="o">=</span><span class="n">saved_genome</span><span class="p">,</span> <span class="n">num_shapes</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_shapes</span><span class="p">)</span>
-    <span class="n">genome</span> <span class="o">=</span> <span class="n">evolver</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">num_generations</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_generations</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">square</span><span class="p">:</span>
+        <span class="n">draw</span> <span class="o">=</span> <span class="n">drawers</span><span class="o">.</span><span class="n">add_square</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">draw</span> <span class="o">=</span> <span class="n">drawers</span><span class="o">.</span><span class="n">add_circle</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">ssim</span><span class="p">:</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">error_metrics</span><span class="o">.</span><span class="n">structural_similarity_error</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">error_metrics</span><span class="o">.</span><span class="n">mean_squared_error</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dark</span><span class="p">:</span>
+        <span class="n">adjustments</span> <span class="o">=</span> <span class="p">[</span><span class="n">adjusters</span><span class="o">.</span><span class="n">STRONG_DARK_ADJUSTER</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">adjustments</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">output</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">silent</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">silent</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">output</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">callback_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">callbacks</span><span class="o">.</span><span class="n">quiet_visual_callback</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="n">callback_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">callbacks</span><span class="o">.</span><span class="n">quiet_verbose_callback</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">callback_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">callbacks</span><span class="o">.</span><span class="n">visual_callback</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="n">callback_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">callbacks</span><span class="o">.</span><span class="n">verbose_callback</span><span class="p">)</span>
+
+    <span class="n">evolver</span> <span class="o">=</span> <span class="n">Evolver</span><span class="p">(</span><span class="n">get_image</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">image</span><span class="p">),</span> <span class="n">saved_genome</span><span class="o">=</span><span class="n">saved_genome</span><span class="p">,</span> <span class="n">num_shapes</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_shapes</span><span class="p">,</span> <span class="n">draw</span><span class="o">=</span><span class="n">draw</span><span class="p">,</span> <span class="n">calculate_error</span><span class="o">=</span><span class="n">error</span><span class="p">,</span> <span class="n">adjusters</span><span class="o">=</span><span class="n">adjustments</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;evolve!&quot;</span><span class="p">)</span>
+    <span class="n">genome</span> <span class="o">=</span> <span class="n">evolver</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">num_generations</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_generations</span><span class="p">,</span> <span class="n">silent</span><span class="o">=</span><span class="n">silent</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="n">callback_list</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">genome</span><span class="o">.</span><span class="n">render_scaled_image</span><span class="p">()</span>
 
     <span class="n">imwrite</span><span class="p">(</span><span class="n">image_path</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
@@ -103,7 +142,7 @@
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
+<p class="caption"><span class="caption-text">API Reference:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../shapevolve.html">shapevolve package</a></li>
 </ul>

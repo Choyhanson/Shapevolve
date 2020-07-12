@@ -9,7 +9,7 @@ More information
 ----------------
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: API Reference:
 
    shapevolve
 
