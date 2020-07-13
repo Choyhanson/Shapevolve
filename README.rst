@@ -11,26 +11,26 @@ with assistance from PyCharm.
 
 View on `PyPI.`_
 
-.. image:: ./images/starrynightgif.gif
+.. image:: https://raw.githubusercontent.com/richmondvan/Shapevolve/master/images/starrynightgif.gif
 
 Sample Results:
 ---------------
 
 The Starry Night:
 
-.. image:: ./images/starrynight.png_result.png
+.. image:: https://raw.githubusercontent.com/richmondvan/Shapevolve/master/images/starrynight.png_result.png
 
 Mona Lisa:
 
-.. image:: ./images/monalisa.jpg_result.png
+.. image:: https://raw.githubusercontent.com/richmondvan/Shapevolve/master/images/monalisa.jpg_result.png
 
 Girl with a Pearl Earring:
 
-.. image:: ./images/pearlearring.jpg_result.png
+.. image:: https://raw.githubusercontent.com/richmondvan/Shapevolve/master/images/pearlearring.jpg_result.png
 
 The Great Wave off Kanagawa:
 
-.. image:: ./images/greatwave.jpg_result.png
+.. image:: https://raw.githubusercontent.com/richmondvan/Shapevolve/master/images/greatwave.jpg_result.png
 
 How to install and use:
 -----------------------
