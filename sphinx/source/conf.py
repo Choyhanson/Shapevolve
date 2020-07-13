@@ -23,7 +23,7 @@ copyright = '2020, Evan Zheng'
 author = 'Evan Zheng'
 
 # The full version, including alpha/beta/rc tags
-release = 'v0.1.3-alpha'
+release = 'v0.1.4-alpha'
 
 
 # -- General configuration ---------------------------------------------------
